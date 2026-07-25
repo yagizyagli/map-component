@@ -10,7 +10,7 @@ Eliminates lines of declarative JavaScript boilerplate configurations, script or
 ---
 
 ## 🎯 Production Infrastructure Links
-* 🚀 **Enterprise Live Demo Page:** [https://YOUR_GITHUB_USERNAME.github.io/map-component/](https://YOUR_GITHUB_USERNAME.github.io/map-component/)
+* 🚀 **Enterprise Live Demo Page:** [https://github.com/yagizyagli.github.io/map-component/](https://github.com/yagizyagli.github.io/map-component/)
 * 📦 **Production Global Cloud CDN:** `https://jsdelivr.net`
 
 ---
@@ -64,6 +64,18 @@ Write your map boundaries natively inside your layout structures:
 | `lng` | Floating Decimal | **Mandatory Value.** Precision marker anchor longitude point |
 | `innerHTML` | Valid HTML Strings | Inner structural element context to format modern popup wrappers on selection |
 
----
+
+## ⭐ Support & Star
+
+If you find this library useful, please consider giving it a **Star** on GitHub! It helps more developers discover the project and motivates further development.
+
+
 ## 📄 Project Governance & Licensing
 This software codebase is open-source product infrastructure covered under the **MIT License**.
+
+## 👨‍💻 Author & Maintainer
+
+This project was envisioned, designed, and crafted with passion. Feel free to reach out for collaborations, feedback, or just to say hi!
+
+GitHub:[@yagizyagli](https://github.com/yagizyagli)
+
