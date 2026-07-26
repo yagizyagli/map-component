@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. Load Leaflet CSS natively first inside head -->
+    <!-- 1. Load Leaflet Core Styles safely inside head -->
     <link rel="stylesheet" href="https://unpkg.com">
     
-    <!-- 2. Load Leaflet Core Engine right in the head to secure execution -->
+    <!-- 2. Load Leaflet Engine safely right in the head to secure global scope execution -->
     <script src="https://unpkg.com"></script>
     
     <style>
@@ -73,7 +73,7 @@
         </ul>
     </div>
 
-    <h2>Live Engine Map Showcase</h2>
+    <h2>Live Engine Map Showcase (Click Anywhere to Move Pin)</h2>
     <div class="demo-wrapper">
         <!-- THE ENVIRONMENT CONTAINER FOR GUARANTEED RENDERING -->
         <div id="final-universe-map-anchor"></div>
@@ -90,11 +90,10 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- GUARANTEED ABSOLUTE RUNNER: Executing Leaflet directly with zero async bottlenecks -->
+    <!-- GUARANTEED ABSOLUTE RUNNER WITH DYNAMIC CLICK-TO-MOVE MARKER PIPELINE -->
     <script>
         window.addEventListener('load', () => {
             if (typeof L !== 'undefined') {
-                // Explicitly set Leaflet default icons paths before engine start
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
                     iconRetinaUrl: 'https://unpkg.com',
@@ -102,28 +101,30 @@
                     shadowUrl: 'https://unpkg.com',
                 });
 
-                // Build Map Canvas directly onto the guaranteed container layout
                 const mapEngine = L.map('final-universe-map-anchor', {
                     zoomControl: true,
                     scrollWheelZoom: true,
                     trackResize: true
                 }).setView([41.0082, 28.9784], 12);
 
-                // Pull Map Tiles directly from secure CartoDB network
                 L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
                     maxZoom: 20,
                     crossOrigin: true,
-                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+                    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
+                    subdomains: 'abcd'
                 }).addTo(mapEngine);
 
-                // Instantly inject the two production demo map markers back with premium styles
-                const marker1 = L.marker([41.0082, 28.9784]).addTo(mapEngine);
-                marker1.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3><p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p></div>');
+                // Create a dynamic, draggable marker that jumps to click location
+                const userMarker = L.marker([41.0082, 28.9784], { draggable: true }).addTo(mapEngine);
+                userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">You moved this pin here dynamically!</p></div>').openPopup();
 
-                const marker2 = L.marker([41.0422, 29.0074]).addTo(mapEngine);
-                marker2.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3><p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p></div>');
+                // 🚀 THE DYNAMIC CLICK TRIGGER: Relocates the pin to any click target point natively
+                mapEngine.on('click', (e) => {
+                    const clickedCoords = e.latlng;
+                    userMarker.setLatLng(clickedCoords);
+                    userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">New Location Fixed</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
+                });
 
-                // Force layout engine size recalculations
                 setTimeout(() => {
                     mapEngine.invalidateSize();
                     window.dispatchEvent(new Event('resize'));
