@@ -46,7 +46,7 @@ leafletJS.src = 'https://unpkg.com';
 document.head.appendChild(leafletJS);
 
 leafletJS.onload = () => {
-    // 🛠️ CRITICAL FIX: Explicitly override Leaflet's broken default marker icon image assets paths
+    // Override Leaflet's broken default marker icon image assets paths
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com',
@@ -80,9 +80,10 @@ class CustomMap extends HTMLElement {
             scrollWheelZoom: true
         }).setView([lat, lng], zoom);
 
-        // Load Tile Layer map graphics maps safely from OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+        // 🛠️ CRITICAL FIXED PROVIDER: Use unpkg protocol-relative secure path for seamless rendering across SSL environments
+        L.tileLayer('https://openstreetmap.org{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
         }).addTo(this.map);
 
         // Process Interactive Map Pins from nodes markup
@@ -101,9 +102,9 @@ class CustomMap extends HTMLElement {
                 }
             });
             
-            // Force rendering recalculation
+            // Force rendering recalculation and viewport stamp
             this.map.invalidateSize();
-        }, 150);
+        }, 300);
     }
 }
 
@@ -111,3 +112,4 @@ class MapPin extends HTMLElement {
     connectedCallback() {
         this.style.display = 'none';
     }
+}
