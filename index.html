@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 🛠️ CRITICAL FIXED ASSETS: Load Leaflet CSS natively first -->
+    <!-- Load Leaflet CSS natively first -->
     <link rel="stylesheet" href="https://unpkg.com">
     
     <style>
         :root {
-            --bg: #0f172a; /* Dark mode style background to showcase premium modern UI */
+            --bg: #0f172a;
             --surface: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary: #38bdf8;
-            --border: rgba(255,255,255,0.1);
+            --border: rgba(255, 255, 255, 0.1);
             --code-bg: #0f172a;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text-main); max-width: 1000px; margin: 0 auto; padding: 60px 20px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
@@ -30,7 +30,6 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* Rigid styling force for container dimensions */
         .map-render-zone {
             display: block;
             width: 100%;
@@ -56,7 +55,6 @@
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
-        <!-- THE ARCHITECTURAL COMPONENT INSTANTIATED SECURELY -->
         <custom-map class="map-render-zone" lat="41.0082" lng="28.9784" zoom="12" height="480px">
             <map-pin lat="41.0082" lng="28.9784">
                 <div style="font-family: inherit; color: #1e293b;">
@@ -84,7 +82,7 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- 🛠️ DIRECT IMMUTABLE CDN LOAD: Resolves local routing issues across deployments -->
-    <script src="https://jsdelivr.net?v=final-universe-fix"></script>
+    <!-- Load Local Component Execution Module -->
+    <script src="map.js?v=absolute-pin-fix-3"></script>
 </body>
 </html>
