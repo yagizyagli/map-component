@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
+    
+    <!-- 1. Load Leaflet CSS natively first inside head -->
+    <link rel="stylesheet" href="https://unpkg.com">
+    
+    <!-- 2. Load Leaflet Core Engine right in the head to secure execution -->
+    <script src="https://unpkg.com"></script>
+    
     <style>
         :root {
             --bg: #0f172a;
@@ -26,24 +33,27 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* 🛠️ THE UNBREAKABLE GEOMETRIC CONTAINER: 
-           This explicitly bakes the production-ready Istanbul road network map imagery 
-           directly into the container's visual background layers at pixel zero! */
-        .ultimate-map-canvas {
+        /* THE ABSOLUTE PIXEL CONSTRAINT FORCING RENDERING ENGINE */
+        custom-map, .map-render-zone {
             display: block !important;
             width: 100% !important;
             height: 500px !important;
             position: relative !important;
+            background-color: #1e293b !important;
             border-radius: 16px !important;
             overflow: hidden !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7) !important;
-            
-            /* 🌍 THE SECURE PRODUCTION IMAGE EMBED: Zero requests, zero CORS blocks, zero 0px rendering bugs */
-            background-image: url('https://cartocdn.com') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(8px) !important;
+            border-radius: 12px !important;
+            padding: 6px !important;
+        }
+        .leaflet-popup-content {
+            color: #0f172a !important;
         }
     </style>
 </head>
@@ -62,19 +72,20 @@
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
-        <!-- THE ARCHITECTURAL CANVAS RUNNING SAFELY SECURED WITH INLINE LAYERS -->
-        <custom-map class="ultimate-map-canvas" lat="41.0082" lng="28.9784" zoom="12">
-            <!-- Production Pins Overlays rendered flawlessly above the core asset layout -->
-            <div style="position: absolute; top: 48%; left: 49%; transform: translate(-50%, -100%); z-index: 10; cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));">
-                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ef4444"/>
-                </svg>
-            </div>
-            <div style="position: absolute; top: 40%; left: 54%; transform: translate(-50%, -100%); z-index: 10; cursor: pointer; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));">
-                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#3b82f6"/>
-                </svg>
-            </div>
+        <!-- THE ARCHITECTURAL COMPONENT INSTANTIATED SECURELY -->
+        <custom-map class="map-render-zone" lat="41.0082" lng="28.9784" zoom="12">
+            <map-pin lat="41.0082" lng="28.9784">
+                <div style="font-family: inherit;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3>
+                    <p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p>
+                </div>
+            </map-pin>
+            <map-pin lat="41.0422" lng="29.0074">
+                <div style="font-family: inherit;">
+                    <h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3>
+                    <p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p>
+                </div>
+            </map-pin>
         </custom-map>
     </div>
 
@@ -89,10 +100,7 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- Native elements preservation layer for structural validation -->
-    <script>
-        class MapPin extends HTMLElement { connectedCallback() { this.style.display = 'none'; } }
-        if (!customElements.get('map-pin')) customElements.define('map-pin', MapPin);
-    </script>
+    <!-- 🛠️ CACHE BUSTING ENGINE INTEGRATION: Forces jsDelivr to fetch the brand new map.js instantly -->
+    <script src="https://jsdelivr.net?v=ultimate-global-victory-v100"></script>
 </body>
 </html>
