@@ -33,7 +33,7 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* 🛠️ FORCE PIXEL BOUNDS: This tells the browser exactly how big the map area is from microsecond zero */
+        /* THE ABSOLUTE PIXEL CONSTRAINT FORCING RENDERING ENGINE */
         .ultimate-map-canvas {
             display: block !important;
             width: 100% !important;
@@ -72,7 +72,7 @@
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
-        <!-- 🗺️ THE ABSOLUTE CONTAINER TARGET FOR HARDIZ RENDERING -->
+        <!-- THE ABSOLUTE CONTAINER TARGET FOR HARDWARE RENDERING -->
         <div id="final-universe-map-anchor" class="ultimate-map-canvas"></div>
     </div>
 
@@ -89,41 +89,38 @@
 
     <!-- FINAL ISOLATED RUNNER PIPELINE: Completely overrides broken CDN links in previous screens -->
     <script>
-        // Secure and override marker icons globally before map initialization
-        if (typeof L !== 'undefined') {
-            delete L.Icon.Default.prototype._getIconUrl;
-            L.Icon.Default.mergeOptions({
-                iconRetinaUrl: 'https://unpkg.com',
-                iconUrl: 'https://unpkg.com',
-                shadowUrl: 'https://unpkg.com',
-            });
+        window.addEventListener('load', () => {
+            if (typeof L !== 'undefined') {
+                delete L.Icon.Default.prototype._getIconUrl;
+                L.Icon.Default.mergeOptions({
+                    iconRetinaUrl: 'https://unpkg.com',
+                    iconUrl: 'https://unpkg.com',
+                    shadowUrl: 'https://unpkg.com',
+                });
 
-            // Initialize Leaflet Map Instance on the freshly isolated element ID
-            const mapEngine = L.map('final-universe-map-anchor', {
-                zoomControl: true,
-                scrollWheelZoom: true
-            }).setView([41.0082, 28.9784], 12);
+                const mapEngine = L.map('final-universe-map-anchor', {
+                    zoomControl: true,
+                    scrollWheelZoom: true
+                }).setView([41.0082, 28.9784], 12);
 
-            // Fetch tiles directly across CORS safely
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                crossOrigin: true,
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(mapEngine);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    crossOrigin: true,
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(mapEngine);
 
-            // Render Demo Pins with markup popups
-            const pinIstanbul = L.marker([41.0082, 28.9784]).addTo(mapEngine);
-            pinIstanbul.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3><p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p></div>');
+                const pinIstanbul = L.marker([41.0082, 28.9784]).addTo(mapEngine);
+                pinIstanbul.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3><p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p></div>');
 
-            const pinBesiktas = L.marker([41.0422, 29.0074]).addTo(mapEngine);
-            pinBesiktas.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3><p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p></div>');
+                const pinBesiktas = L.marker([41.0422, 29.0074]).addTo(mapEngine);
+                pinBesiktas.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3><p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p></div>');
 
-            // Force viewport stamp bounds validation to secure the display
-            setTimeout(() => {
-                mapEngine.invalidateSize();
-                window.dispatchEvent(new Event('resize'));
-            }, 300);
-        }
+                setTimeout(() => {
+                    mapEngine.invalidateSize();
+                    window.dispatchEvent(new Event('resize'));
+                }, 300);
+            }
+        });
     </script>
 </body>
 </html>
