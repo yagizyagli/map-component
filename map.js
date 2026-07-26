@@ -1,14 +1,12 @@
-// 1. Inject Premium CSS Styles Object into Document Head Naturally
+// 1. Inject Premium CSS Styles directly into Head
 const styleDocument = document.createElement('style');
 styleDocument.textContent = `
-  /* Smooth Fade-in Animation for Map Loading */
   custom-map {
     animation: mapFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
   @keyframes mapFadeIn { to { opacity: 1; } }
 
-  /* Premium Modern Map Container Design */
   custom-map.custom-map-container {
     border-radius: 16px;
     overflow: hidden;
@@ -17,7 +15,6 @@ styleDocument.textContent = `
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  /* Custom Modern Styles for Leaflet Popups */
   .custom-map-container .leaflet-popup-content-wrapper {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
@@ -43,62 +40,53 @@ styleDocument.textContent = `
 `;
 document.head.appendChild(styleDocument);
 
-// 2. Load Leaflet Core Engine
+// 2. Load Leaflet Core Engine Script
 const leafletJS = document.createElement('script');
 leafletJS.src = 'https://unpkg.com';
 document.head.appendChild(leafletJS);
 
-// 🛠️ CRITICAL LIFECYCLE FIX: Wait for window to load completely before defining components
 leafletJS.onload = () => {
-    if (document.readyState === 'complete') {
-        initMapComponents();
-    } else {
-        window.addEventListener('load', initMapComponents);
-    }
-};
+    // 🛠️ CRITICAL FIX: Explicitly override Leaflet's broken default marker icon image assets paths
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com',
+        iconUrl: 'https://unpkg.com',
+        shadowUrl: 'https://unpkg.com',
+    });
 
-function initMapComponents() {
-    if (!customElements.get('custom-map')) {
-        customElements.define('custom-map', CustomMap);
-    }
-    if (!customElements.get('map-pin')) {
-        customElements.define('map-pin', MapPin);
-    }
-}
+    customElements.define('custom-map', CustomMap);
+    customElements.define('map-pin', MapPin);
+};
 
 // 3. Define Main <custom-map> Component
 class CustomMap extends HTMLElement {
     connectedCallback() {
-        // Wait a micro-moment for DOM to stamp completely
+        if (!this.id) {
+            this.id = 'map-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        this.classList.add('custom-map-container');
+        this.style.display = 'block';
+        this.style.width = this.getAttribute('width') || '100%';
+        this.style.height = this.getAttribute('height') || '450px';
+
+        const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
+        const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
+        const zoom = parseInt(this.getAttribute('zoom')) || 13;
+
+        // Initialize Map Object safely
+        this.map = L.map(this.id, {
+            zoomControl: true,
+            scrollWheelZoom: true
+        }).setView([lat, lng], zoom);
+
+        // Load Tile Layer map graphics maps safely from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(this.map);
+
+        // Process Interactive Map Pins from nodes markup
         setTimeout(() => {
-            if (!this.id) {
-                this.id = 'map-' + Math.random().toString(36).substr(2, 9);
-            }
-
-            this.classList.add('custom-map-container');
-            this.style.display = 'block';
-            this.style.width = this.getAttribute('width') || '100%';
-            this.style.height = this.getAttribute('height') || '450px';
-
-            const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
-            const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
-            const zoom = parseInt(this.getAttribute('zoom')) || 13;
-
-            // Initialize Map safely
-            this.map = L.map(this.id, {
-                zoomControl: true,
-                scrollWheelZoom: true
-            }).setView([lat, lng], zoom);
-
-            // Force Leaflet to recalculate container bounds
-            setTimeout(() => { this.map.invalidateSize(); }, 200);
-
-            // Load Tile Layer map graphics
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(this.map);
-
-            // Process Interactive Map Pins
             const pins = this.querySelectorAll('map-pin');
             pins.forEach(pin => {
                 const pLat = parseFloat(pin.getAttribute('lat'));
@@ -112,13 +100,14 @@ class CustomMap extends HTMLElement {
                     }
                 }
             });
-        }, 100);
+            
+            // Force rendering recalculation
+            this.map.invalidateSize();
+        }, 150);
     }
 }
 
-// 4. Define Meta <map-pin> Data Component
 class MapPin extends HTMLElement {
     connectedCallback() {
         this.style.display = 'none';
     }
-}
