@@ -1,9 +1,6 @@
 /**
  * 🌍 Map Component (Native Web Component Framework)
  * Developed by yagizyagli — v1.0.0 Production Ready
- * 
- * A zero-boilerplate, lightweight custom HTML element architecture 
- * built to integrate fully interactive maps using raw tags.
  */
 
 // 1. Automatically inject secure Leaflet Core Styling inside document head if not present
@@ -50,9 +47,6 @@ if (typeof L === 'undefined') {
     initializeMapFramework();
 }
 
-/**
- * Orchestrates global component lifecycle and resolves image asset path assets
- */
 function initializeMapFramework() {
     // Explicitly override and fix default marker asset paths globally across CDN bounds
     delete L.Icon.Default.prototype._getIconUrl;
@@ -62,7 +56,6 @@ function initializeMapFramework() {
         shadowUrl: 'https://unpkg.com',
     });
 
-    // Securely register components into the custom elements registry
     if (!customElements.get('custom-map')) customElements.define('custom-map', CustomMap);
     if (!customElements.get('map-pin')) customElements.define('map-pin', MapPin);
 }
@@ -70,53 +63,51 @@ function initializeMapFramework() {
 // 4. Define Main Component HTMLElement Architecture
 class CustomMap extends HTMLElement {
     connectedCallback() {
-        setTimeout(() => {
-            if (typeof L === 'undefined') return; // Lifecycle protection boundary
-            if (!this.id) this.id = 'map-' + Math.random().toString(36).substr(2, 9);
-            this.classList.add('custom-map-container');
+        // Double nested frame rendering buffer to secure bounding box pixels
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                if (typeof L === 'undefined') return;
+                if (!this.id) this.id = 'map-' + Math.random().toString(36).substr(2, 9);
+                this.classList.add('custom-map-container');
 
-            const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
-            const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
-            const zoom = parseInt(this.getAttribute('zoom')) || 13;
+                const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
+                const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
+                const zoom = parseInt(this.getAttribute('zoom')) || 13;
 
-            // Instantiate native Leaflet viewport framework
-            this.map = L.map(this.id, { zoomControl: true, scrollWheelZoom: true }).setView([lat, lng], zoom);
+                // Instantiate native Leaflet viewport framework
+                this.map = L.map(this.id, { zoomControl: true, scrollWheelZoom: true }).setView([lat, lng], zoom);
 
-            // Fetch and mount robust secure CartoDB Voyager tile network layers
-            L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-                maxZoom: 20,
-                crossOrigin: true, // Bypass cross-origin isolation blocks natively
-                attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
-                subdomains: 'abcd'
-            }).addTo(this.map);
+                // 🛠️ THE CARTO_DB ENGINE: Swapping openstreetmap with enterprise Cartocdn to bypass Ad-Blockers and tracker blocks
+                L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    crossOrigin: true,
+                    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
+                    subdomains: 'abcd'
+                }).addTo(this.map);
 
-            // Scan, parse and deploy interactive child node pin markers
-            const pins = this.querySelectorAll('map-pin');
-            pins.forEach(pin => {
-                const pLat = parseFloat(pin.getAttribute('lat'));
-                const pLng = parseFloat(pin.getAttribute('lng'));
-                const content = pin.innerHTML.trim();
+                // Scan, parse and deploy interactive child node pin markers
+                const pins = this.querySelectorAll('map-pin');
+                pins.forEach(pin => {
+                    const pLat = parseFloat(pin.getAttribute('lat'));
+                    const pLng = parseFloat(pin.getAttribute('lng'));
+                    const content = pin.innerHTML.trim();
+                    
+                    if (pLat && pLng) {
+                        const marker = L.marker([pLat, pLng]).addTo(this.map);
+                        if (content) marker.bindPopup(content);
+                    }
+                });
                 
-                if (pLat && pLng) {
-                    const marker = L.marker([pLat, pLng]).addTo(this.map);
-                    if (content) marker.bindPopup(content);
-                }
+                // Force size re-calculations to instantly destroy gray tile constraints
+                setTimeout(() => {
+                    if (this.map) {
+                        this.map.invalidateSize();
+                        window.dispatchEvent(new Event('resize'));
+                    }
+                }, 400);
             });
-            
-            // Force rendering recalculations to instantly destroy gray tile layout lag
-            setTimeout(() => {
-                if (this.map) {
-                    this.map.invalidateSize();
-                    window.dispatchEvent(new Event('resize'));
-                }
-            }, 300);
-        }, 200);
+        });
     }
 }
 
-// 5. Define Meta Data Storage Element Node
-class MapPin extends HTMLElement { 
-    connectedCallback() { 
-        this.style.display = 'none'; 
-    } 
-}
+class MapPin extends HTMLElement { connectedCallback() { this.style.display = 'none'; } }
