@@ -1,4 +1,4 @@
-# 🌍 Map Component (`<custom-map>`)
+# 🌍 Map Component (`<custom-map>`)(https://yagizyagli.github.io/map-component/)
 
 [![License: MIT](https://shields.io)](https://opensource.org)
 [![CDN: jsDelivr](https://shields.io)](https://jsdelivr.com)
@@ -10,7 +10,7 @@ Eliminates lines of declarative JavaScript boilerplate configurations, script or
 ---
 
 ## 🎯 Production Infrastructure Links
-* 🚀 **Enterprise Live Demo Page:** [https://github.com/yagizyagli.github.io/map-component/](https://github.com/yagizyagli.github.io/map-component/)
+* 🚀 **Enterprise Live Demo Page:** [https://github.com/yagizyagli.github.io/map-component/](https://yagizyagli.github.io/map-component/)
 * 📦 **Production Global Cloud CDN:** `https://jsdelivr.net`
 
 ---
