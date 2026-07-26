@@ -72,7 +72,6 @@
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
-        <!-- THE ABSOLUTE CONTAINER TARGET FOR HARDWARE RENDERING -->
         <div id="final-universe-map-anchor" class="ultimate-map-canvas"></div>
     </div>
 
@@ -87,7 +86,7 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- FINAL ISOLATED RUNNER PIPELINE: Completely overrides broken CDN links in previous screens -->
+    <!-- CARTO_DB SECURE PRODUCTION TILE ENGINE PIPELINE -->
     <script>
         window.addEventListener('load', () => {
             if (typeof L !== 'undefined') {
@@ -103,10 +102,11 @@
                     scrollWheelZoom: true
                 }).setView([41.0082, 28.9784], 12);
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    crossOrigin: true,
-                    attribution: '&copy; OpenStreetMap contributors'
+                // 🛠️ THE CARTO_DB ANTIVIRUS FIX: Swapping broken openstreetmap server with robust secure CartoDB Voyager CDN
+                L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+                    maxZoom: 20,
+                    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
+                    subdomains: 'abcd'
                 }).addTo(mapEngine);
 
                 const pinIstanbul = L.marker([41.0082, 28.9784]).addTo(mapEngine);
