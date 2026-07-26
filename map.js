@@ -1,4 +1,4 @@
-// 1. Inject Premium CSS Styles directly into Head
+// 1. Inject Premium Styles into Document Head
 const styleDocument = document.createElement('style');
 styleDocument.textContent = `
   custom-map {
@@ -6,14 +6,6 @@ styleDocument.textContent = `
     opacity: 0;
   }
   @keyframes mapFadeIn { to { opacity: 1; } }
-
-  custom-map.custom-map-container {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
 
   .custom-map-container .leaflet-popup-content-wrapper {
     background: rgba(255, 255, 255, 0.95);
@@ -40,54 +32,45 @@ styleDocument.textContent = `
 `;
 document.head.appendChild(styleDocument);
 
-// 2. Load Leaflet Core Engine Script
-const leafletJS = document.createElement('script');
-leafletJS.src = 'https://unpkg.com';
-document.head.appendChild(leafletJS);
-
-leafletJS.onload = () => {
-    // Override Leaflet's broken default marker icon image assets paths
+// 2. Override default marker asset paths on registry load immediately
+if (typeof L !== 'undefined') {
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com',
         iconUrl: 'https://unpkg.com',
         shadowUrl: 'https://unpkg.com',
     });
-
-    customElements.define('custom-map', CustomMap);
-    customElements.define('map-pin', MapPin);
-};
+}
 
 // 3. Define Main <custom-map> Component
 class CustomMap extends HTMLElement {
     connectedCallback() {
-        if (!this.id) {
-            this.id = 'map-' + Math.random().toString(36).substr(2, 9);
-        }
-
-        this.classList.add('custom-map-container');
-        this.style.display = 'block';
-        this.style.width = this.getAttribute('width') || '100%';
-        this.style.height = this.getAttribute('height') || '450px';
-
-        const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
-        const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
-        const zoom = parseInt(this.getAttribute('zoom')) || 13;
-
-        // Initialize Map Object safely
-        this.map = L.map(this.id, {
-            zoomControl: true,
-            scrollWheelZoom: true
-        }).setView([lat, lng], zoom);
-
-        // 🛠️ CRITICAL FIXED PROVIDER: Use unpkg protocol-relative secure path for seamless rendering across SSL environments
-        L.tileLayer('https://openstreetmap.org{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-        }).addTo(this.map);
-
-        // Process Interactive Map Pins from nodes markup
+        if (typeof L === 'undefined') return; // Fail-safe check
+        
         setTimeout(() => {
+            if (!this.id) {
+                this.id = 'map-' + Math.random().toString(36).substr(2, 9);
+            }
+
+            this.classList.add('custom-map-container');
+
+            const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
+            const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
+            const zoom = parseInt(this.getAttribute('zoom')) || 13;
+
+            // Initialize Map Object
+            this.map = L.map(this.id, {
+                zoomControl: true,
+                scrollWheelZoom: true
+            }).setView([lat, lng], zoom);
+
+            // Load Tile Layer map graphics securely from OpenStreetMap CDN
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+            }).addTo(this.map);
+
+            // Process Interactive Map Pins
             const pins = this.querySelectorAll('map-pin');
             pins.forEach(pin => {
                 const pLat = parseFloat(pin.getAttribute('lat'));
@@ -102,9 +85,9 @@ class CustomMap extends HTMLElement {
                 }
             });
             
-            // Force rendering recalculation and viewport stamp
-            this.map.invalidateSize();
-        }, 300);
+            // Force viewport size recalculation mapping
+            setTimeout(() => { this.map.invalidateSize(); }, 300);
+        }, 200);
     }
 }
 
@@ -113,3 +96,7 @@ class MapPin extends HTMLElement {
         this.style.display = 'none';
     }
 }
+
+// Register Custom Web Components
+customElements.define('custom-map', CustomMap);
+customElements.define('map-pin', MapPin);
