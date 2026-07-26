@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- Load Leaflet CSS natively first -->
+    <!-- 🛠️ CRITICAL FIX: Load Leaflet STYLING natively first -->
     <link rel="stylesheet" href="https://unpkg.com">
+    
+    <!-- 🛠️ CRITICAL FIX: Load Leaflet CORE ENGINE right in the head to prevent lifecycle blocks -->
+    <script src="https://unpkg.com"></script>
     
     <style>
         :root {
@@ -30,11 +33,11 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* 🛠️ THE ABSOLUTE FORCE FIX: Tarayıcıyı haritayı çizmeye zorlayan kritik CSS */
+        /* Rigid structural bounds for container execution */
         custom-map, .map-render-zone {
             display: block !important;
             width: 100% !important;
-            height: 500px !important; /* 0px kalmasını kesin olarak engelliyoruz */
+            height: 500px !important;
             position: relative !important;
             background-color: #1e293b !important;
             border-radius: 16px !important;
@@ -86,7 +89,7 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- Load Local Component Execution Module with strict master cache buster v11 -->
-    <script src="https://jsdelivr.net?v=master-render-force-v11"></script>
+    <!-- Load Local Component Execution Module with fresh production cache buster -->
+    <script src="https://jsdelivr.net?v=absolute-engine-fix-v99"></script>
 </body>
 </html>
