@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. CORRECT & FULLY COMPLETED LEAFLET CSS LINK -->
+    <!-- 1. Native Leaflet Core Styles -->
     <link rel="stylesheet" href="https://unpkg.com">
 
-    <!-- 2. CORRECT & FULLY COMPLETED LEAFLET CORE ENGINE JS LINK -->
-    <script src="https://unpkg.com"></script>
+    <!-- 2. Secured Engine Load with explicit deferred execution -->
+    <script src="https://unpkg.com" defer></script>
     
     <style>
         :root {
@@ -33,7 +33,7 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* THE FIXED PIXEL CANVASES THAT FORCES VISIBILITY */
+        /* Rigid constraints enforcing layout engine metrics */
         #final-universe-map-anchor {
             display: block !important;
             width: 100% !important;
@@ -45,18 +45,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
             z-index: 1 !important;
-        }
-        
-        .leaflet-popup-content-wrapper {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(8px) !important;
-            border-radius: 12px !important;
-            padding: 6px !important;
-        }
-        .leaflet-popup-content {
-            color: #0f172a !important;
-            font-size: 14px !important;
-            line-height: 1.5 !important;
         }
     </style>
 </head>
@@ -89,11 +77,11 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- GUARANTEED RUNNER PIPELINE USING HIGH PERFORMANCE ECOSYSTEMS -->
+    <!-- AUTOMATED STRUCTURAL ENGINE INITIALIZATION PIPELINE -->
     <script>
         window.addEventListener('load', () => {
+            // Execution boundary check to ensure Leaflet global scope is mounted
             if (typeof L !== 'undefined') {
-                // Correctly resolve default icon image assets across unpkgbounds
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
                     iconRetinaUrl: 'https://unpkg.com',
@@ -107,7 +95,7 @@
                     trackResize: true
                 }).setView([41.0082, 28.9784], 12);
 
-                // 🛠️ PERFECTED UNIMPEDED RECTIFIED CARTO_DB TILE OVERLAYS
+                // Mount clean secure CartoDB network tile grid layers
                 L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
                     maxZoom: 20,
                     crossOrigin: true,
@@ -115,21 +103,22 @@
                     subdomains: 'abcd'
                 }).addTo(mapEngine);
 
-                // Inject dynamic draggable pin with popup details
+                // Initialize interactive target user marker entity
                 const userMarker = L.marker([41.0082, 28.9784], { draggable: true }).addTo(mapEngine);
                 userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">Click anywhere on the world map to move this pin instantly!</p></div>').openPopup();
 
-                // Click handler to move pin dynamically across tile dimensions
+                // Dynamic coordinate relocation pipeline mapping
                 mapEngine.on('click', (e) => {
                     const clickedCoords = e.latlng;
                     userMarker.setLatLng(clickedCoords);
                     userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
                 });
 
+                // Secondary asynchronous canvas redraw to break 0px layout engine limitations
                 setTimeout(() => {
                     mapEngine.invalidateSize();
                     window.dispatchEvent(new Event('resize'));
-                }, 300);
+                }, 400);
             }
         });
     </script>
