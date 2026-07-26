@@ -1,4 +1,4 @@
-// 1. Inject Premium Styles into Document Head
+// 1. Inject Premium CSS Styles into Document Head
 const styleDocument = document.createElement('style');
 styleDocument.textContent = `
   custom-map {
@@ -32,21 +32,27 @@ styleDocument.textContent = `
 `;
 document.head.appendChild(styleDocument);
 
-// 2. Override default marker asset paths on registry load immediately
-if (typeof L !== 'undefined') {
+// 2. Load Leaflet Core Engine Script
+const leafletJS = document.createElement('script');
+leafletJS.src = 'https://unpkg.com';
+document.head.appendChild(leafletJS);
+
+leafletJS.onload = () => {
+    // Override default marker asset paths safely
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com',
         iconUrl: 'https://unpkg.com',
         shadowUrl: 'https://unpkg.com',
     });
-}
+
+    customElements.define('custom-map', CustomMap);
+    customElements.define('map-pin', MapPin);
+};
 
 // 3. Define Main <custom-map> Component
 class CustomMap extends HTMLElement {
     connectedCallback() {
-        if (typeof L === 'undefined') return; // Fail-safe check
-        
         setTimeout(() => {
             if (!this.id) {
                 this.id = 'map-' + Math.random().toString(36).substr(2, 9);
@@ -85,8 +91,13 @@ class CustomMap extends HTMLElement {
                 }
             });
             
-            // Force viewport size recalculation mapping
-            setTimeout(() => { this.map.invalidateSize(); }, 300);
+            // 🛠️ THE GOLDEN JS LINE: Force the browser to trigger a fake window resize event
+            // This wakes up the map engine and forces the map tiles to render immediately!
+            setTimeout(() => {
+                this.map.invalidateSize();
+                window.dispatchEvent(new Event('resize'));
+            }, 400);
+
         }, 200);
     }
 }
@@ -96,7 +107,3 @@ class MapPin extends HTMLElement {
         this.style.display = 'none';
     }
 }
-
-// Register Custom Web Components
-customElements.define('custom-map', CustomMap);
-customElements.define('map-pin', MapPin);
