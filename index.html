@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 🛠️ CRITICAL FIX: Load Leaflet STYLING natively first -->
+    <!-- 1. Load Leaflet CSS natively -->
     <link rel="stylesheet" href="https://unpkg.com">
     
-    <!-- 🛠️ CRITICAL FIX: Load Leaflet CORE ENGINE right in the head to prevent lifecycle blocks -->
+    <!-- 2. Load Leaflet Core Engine Script -->
     <script src="https://unpkg.com"></script>
     
     <style>
@@ -33,7 +33,7 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* Rigid structural bounds for container execution */
+        /* Forces the map layout geometry instantly */
         custom-map, .map-render-zone {
             display: block !important;
             width: 100% !important;
@@ -43,6 +43,17 @@
             border-radius: 16px !important;
             overflow: hidden !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(8px) !important;
+            border-radius: 12px !important;
+            padding: 6px !important;
+        }
+        .leaflet-popup-content {
+            color: #0f172a !important;
         }
     </style>
 </head>
@@ -55,22 +66,21 @@
         🎯 <strong>Production Deliverables & Deployment Endpoints:</strong>
         <ul>
             <li><strong>Live Deployment Link:</strong> <a href="https://yagizyagli.github.io/map-component/" target="_blank">https://yagizyagli.github.io/map-component/</a></li>
-            <li><strong>Global Edge CDN Target Link:</strong> <a href="https://jsdelivr.net" target="_blank">https://jsdelivr.net</a></li>
+            <li><strong>Global Edge CDN Target Link:</strong> <code>https://jsdelivr.net</code></li>
         </ul>
     </div>
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
-        <!-- THE ARCHITECTURAL COMPONENT INSTANTIATED SECURELY -->
         <custom-map class="map-render-zone" lat="41.0082" lng="28.9784" zoom="12">
             <map-pin lat="41.0082" lng="28.9784">
-                <div style="font-family: inherit; color: #1e293b;">
+                <div style="font-family: inherit;">
                     <h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3>
                     <p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p>
                 </div>
             </map-pin>
             <map-pin lat="41.0422" lng="29.0074">
-                <div style="font-family: inherit; color: #1e293b;">
+                <div style="font-family: inherit;">
                     <h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3>
                     <p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p>
                 </div>
@@ -89,7 +99,66 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- 🚀 NEW FRESH CDN LINK: Triggers jsDelivr to fetch the brand new file instantly without any cache blocks -->
-    <script src="https://jsdelivr.net"></script>
+    <!-- 🛠️ GUARANTEED INLINE RUNNER MODULE: Destroys broken CDN path connections completely -->
+    <script>
+        if (typeof L !== 'undefined') {
+            delete L.Icon.Default.prototype._getIconUrl;
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: 'https://unpkg.com',
+                iconUrl: 'https://unpkg.com',
+                shadowUrl: 'https://unpkg.com',
+            });
+        }
+
+        class CustomMap extends HTMLElement {
+            connectedCallback() {
+                setTimeout(() => {
+                    if (!this.id) {
+                        this.id = 'map-' + Math.random().toString(36).substr(2, 9);
+                    }
+
+                    const lat = parseFloat(this.getAttribute('lat')) || 41.0082;
+                    const lng = parseFloat(this.getAttribute('lng')) || 28.9784;
+                    const zoom = parseInt(this.getAttribute('zoom')) || 13;
+
+                    this.map = L.map(this.id, {
+                        zoomControl: true,
+                        scrollWheelZoom: true
+                    }).setView([lat, lng], zoom);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(this.map);
+
+                    const pins = this.querySelectorAll('map-pin');
+                    pins.forEach(pin => {
+                        const pLat = parseFloat(pin.getAttribute('lat'));
+                        const pLng = parseFloat(pin.getAttribute('lng'));
+                        const content = pin.innerHTML.trim();
+
+                        if (pLat && pLng) {
+                            const marker = L.marker([pLat, pLng]).addTo(this.map);
+                            if (content) {
+                                marker.bindPopup(content);
+                            }
+                        }
+                    });
+                    
+                    setTimeout(() => { 
+                        this.map.invalidateSize(); 
+                        window.dispatchEvent(new Event('resize'));
+                    }, 250);
+                }, 150);
+            }
+        }
+
+        class MapPin extends HTMLElement {
+            connectedCallback() { this.style.display = 'none'; }
+        }
+
+        if (!customElements.get('custom-map')) customElements.define('custom-map', CustomMap);
+        if (!customElements.get('map-pin')) customElements.define('map-pin', MapPin);
+    </script>
 </body>
 </html>
