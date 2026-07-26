@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. Load Leaflet CSS natively first inside head -->
+    <!-- 1. Load Leaflet CSS natively first inside head with explicit unpkg secure CDN -->
     <link rel="stylesheet" href="https://unpkg.com">
     
     <!-- 2. Load Leaflet Core Engine right in the head to secure execution -->
@@ -65,13 +65,14 @@
     <div class="badge-container">
         🎯 <strong>Production Deliverables & Deployment Endpoints:</strong>
         <ul>
-            <li><strong>Live Deployment Link:</strong> <a href="https://yagizyagli.github.io/map-component/" target="_blank">https://yagizyagli.github.io/map-component/</a></li>
-            <li><strong>Global Edge CDN Target Link:</strong> <code>https://jsdelivr.net</code></li>
+            <li>export default code execution module link: <a href="https://yagizyagli.github.io/map-component/" target="_blank">https://yagizyagli.github.io/map-component/</a></li>
+            <li>Global Edge CDN Target Link: <code>https://jsdelivr.net</code></li>
         </ul>
     </div>
 
     <h2>Live Engine Map Showcase</h2>
     <div class="demo-wrapper">
+        <!-- THE ABSOLUTE CONTAINER TARGET FOR HARDWARE RENDERING -->
         <div id="final-universe-map-anchor" class="ultimate-map-canvas"></div>
     </div>
 
@@ -90,6 +91,7 @@
     <script>
         window.addEventListener('load', () => {
             if (typeof L !== 'undefined') {
+                // Secure and override marker icons globally before map initialization
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
                     iconRetinaUrl: 'https://unpkg.com',
@@ -109,12 +111,14 @@
                     subdomains: 'abcd'
                 }).addTo(mapEngine);
 
+                // Render Demo Pins with markup popups
                 const pinIstanbul = L.marker([41.0082, 28.9784]).addTo(mapEngine);
                 pinIstanbul.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3><p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p></div>');
 
                 const pinBesiktas = L.marker([41.0422, 29.0074]).addTo(mapEngine);
                 pinBesiktas.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3><p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p></div>');
 
+                // Force layout engine recalculations
                 setTimeout(() => {
                     mapEngine.invalidateSize();
                     window.dispatchEvent(new Event('resize'));
