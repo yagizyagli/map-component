@@ -1,4 +1,4 @@
-# 🌍 Map Component (`<custom-map>`)(https://yagizyagli.github.io/map-component/)
+# 🌍 Map Component (`<custom-map>`)
 
 [![License: MIT](https://shields.io)](https://opensource.org)
 [![CDN: jsDelivr](https://shields.io)](https://jsdelivr.com)
