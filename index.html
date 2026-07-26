@@ -63,9 +63,10 @@
     <p class="subtitle">The definitive open-source web component to integrate custom interactive maps into any web application using raw HTML tags without writing any JavaScript lines.</p>
 
     <div class="badge-container">
-        🎯 <strong>Production Deliverables & Deployment Endpoints:</strong>
+        <!-- Live Showcase Links Configured Successfully -->
+        <b>🎯 Production Deliverables & Deployment Endpoints:</b>
         <ul>
-            <li>Live Deployment Link: <a href="https://yagizyagli.github.io/map-component/" target="_blank">View Live Showcase</a></li>
+            <li>Live Deployment Link: <a href="./" target="_blank">View Live Showcase</a></li>
             <li>Global Edge CDN Target Link: <code>https://jsdelivr.net</code></li>
         </ul>
     </div>
@@ -88,10 +89,10 @@
 &lt;/custom-map&gt;</code></pre>
 
     <!-- GUARANTEED ABSOLUTE RUNNER: Executing Leaflet directly with zero async bottlenecks -->
+    <script src="https://jsdelivr.net?v=absolute-cartodb-victory-v100"></script>
     <script>
         window.addEventListener('load', () => {
             if (typeof L !== 'undefined') {
-                // Explicitly set Leaflet default icons paths before engine start
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
                     iconRetinaUrl: 'https://unpkg.com',
@@ -99,13 +100,11 @@
                     shadowUrl: 'https://unpkg.com',
                 });
 
-                // Build Map Canvas directly onto the guaranteed container layout
                 const mapEngine = L.map('final-universe-map-anchor', {
                     zoomControl: true,
                     scrollWheelZoom: true
                 }).setView([41.0082, 28.9784], 12);
 
-                // Pull Map Tiles directly from secure CartoDB network
                 L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
                     maxZoom: 20,
                     crossOrigin: true,
@@ -113,14 +112,12 @@
                     subdomains: 'abcd'
                 }).addTo(mapEngine);
 
-                // Instantly inject the two production demo map markers
                 const marker1 = L.marker([41.0082, 28.9784]).addTo(mapEngine);
                 marker1.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Istanbul Core</h3><p style="margin: 0; font-size: 13px; color:#475569;">Main commercial and cultural node point.</p></div>');
 
                 const marker2 = L.marker([41.0422, 29.0074]).addTo(mapEngine);
                 marker2.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#1d4ed8;">Besiktas Port</h3><p style="margin: 0; font-size: 13px; color:#475569;">Transit hub and ferry docks.</p></div>');
 
-                // Force layout engine size recalculations
                 setTimeout(() => {
                     mapEngine.invalidateSize();
                     window.dispatchEvent(new Event('resize'));
