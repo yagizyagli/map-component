@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. Native Leaflet Core Styles -->
+    <!-- 1. Global Leaflet Core Styles -->
     <link rel="stylesheet" href="https://unpkg.com">
 
     <!-- 2. Secured Engine Load with explicit deferred execution -->
@@ -80,7 +80,6 @@
     <!-- AUTOMATED STRUCTURAL ENGINE INITIALIZATION PIPELINE -->
     <script>
         window.addEventListener('load', () => {
-            // Execution boundary check to ensure Leaflet global scope is mounted
             if (typeof L !== 'undefined') {
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
@@ -114,7 +113,6 @@
                     userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
                 });
 
-                // Secondary asynchronous canvas redraw to break 0px layout engine limitations
                 setTimeout(() => {
                     mapEngine.invalidateSize();
                     window.dispatchEvent(new Event('resize'));
