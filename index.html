@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. Load Leaflet Core Styles safely inside head -->
+    <!-- 1. CORRECT & FULLY COMPLETED LEAFLET CSS LINK -->
     <link rel="stylesheet" href="https://unpkg.com">
-    
-    <!-- 2. Load Leaflet Engine safely right in the head to secure global scope execution -->
+
+    <!-- 2. CORRECT & FULLY COMPLETED LEAFLET CORE ENGINE JS LINK -->
     <script src="https://unpkg.com"></script>
     
     <style>
@@ -33,7 +33,7 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* THE ABSOLUTE PIXEL CONSTRAINT FORCING RENDERING ENGINE */
+        /* THE FIXED PIXEL CANVASES THAT FORCES VISIBILITY */
         #final-universe-map-anchor {
             display: block !important;
             width: 100% !important;
@@ -75,7 +75,6 @@
 
     <h2>Live Engine Map Showcase (Click Anywhere to Move Pin)</h2>
     <div class="demo-wrapper">
-        <!-- THE ENVIRONMENT CONTAINER FOR GUARANTEED RENDERING -->
         <div id="final-universe-map-anchor"></div>
     </div>
 
@@ -90,10 +89,11 @@
     &lt;map-pin lat="41.0082" lng="28.9784"&gt;Popup View Markup Content Here&lt;/map-pin&gt;
 &lt;/custom-map&gt;</code></pre>
 
-    <!-- GUARANTEED ABSOLUTE RUNNER WITH DYNAMIC CLICK-TO-MOVE MARKER PIPELINE -->
+    <!-- GUARANTEED RUNNER PIPELINE USING HIGH PERFORMANCE ECOSYSTEMS -->
     <script>
         window.addEventListener('load', () => {
             if (typeof L !== 'undefined') {
+                // Correctly resolve default icon image assets across unpkgbounds
                 delete L.Icon.Default.prototype._getIconUrl;
                 L.Icon.Default.mergeOptions({
                     iconRetinaUrl: 'https://unpkg.com',
@@ -107,22 +107,23 @@
                     trackResize: true
                 }).setView([41.0082, 28.9784], 12);
 
+                // 🛠️ PERFECTED ENGELSİZ RECTIFIED CARTO_DB TILE OVERLAYS
                 L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
                     maxZoom: 20,
                     crossOrigin: true,
-                    attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors &copy; <a href="https://carto.com">CARTO</a>',
+                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                     subdomains: 'abcd'
                 }).addTo(mapEngine);
 
-                // Create a dynamic, draggable marker that jumps to click location
+                // Inject dynamic draggable pin with popup details
                 const userMarker = L.marker([41.0082, 28.9784], { draggable: true }).addTo(mapEngine);
-                userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">You moved this pin here dynamically!</p></div>').openPopup();
+                userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">Click anywhere on the world map to move this pin instantly!</p></div>').openPopup();
 
-                // 🚀 THE DYNAMIC CLICK TRIGGER: Relocates the pin to any click target point natively
+                // Click handler to move pin dynamically across tile dimensions
                 mapEngine.on('click', (e) => {
                     const clickedCoords = e.latlng;
                     userMarker.setLatLng(clickedCoords);
-                    userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">New Location Fixed</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
+                    userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
                 });
 
                 setTimeout(() => {
