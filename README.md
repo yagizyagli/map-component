@@ -1,81 +1,151 @@
-# 🌍 Map Component (`<custom-map>`)
+# 🗺️ Map.js
 
-[![License: MIT](https://shields.io)](https://opensource.org)
-[![CDN: jsDelivr](https://shields.io)](https://jsdelivr.com)
+### Production-ready Leaflet Web Component
 
-A highly professional, performance-optimized, zero-dependency Web Component that enables engineers to ship highly interactive geographic maps into layouts using **pure HTML tags**. 
+A lightweight and reusable `<custom-map>` Web Component built on top of Leaflet 1.9.x.
 
-Eliminates lines of declarative JavaScript boilerplate configurations, script orchestration, and CSS asset matching.
-
----
-
-## 🎯 Production Infrastructure Links
-* 🚀 **Enterprise Live Demo Page:** [https://github.com/yagizyagli.github.io/map-component/](https://yagizyagli.github.io/map-component/)
-* 📦 **Production Global Cloud CDN:** `https://jsdelivr.net`
-
----
-
-## ⚡ Core Architecture Features
-* **Zero Runtime Dependencies:** Native custom elements spec execution pipeline.
-* **Auto Injection:** Structural Leaflet engine scripts and styling modules inject safely at runtime.
-* **Embedded UI Styles:** Premium modern UI design variables with fluid animation entry layers and sleek modern popovers out of the box.
-* **Nested Node Tree Parsing:** Intuitive structural relationship between `<custom-map>` wrappers and infinite multi-pin `<map-pin>` parameters.
-
----
-
-## 🛠️ Implementation Quickstart
-
-### 1. Link Engine Script Pipeline
-Place the global script target inside your document architecture:
+Create interactive maps using pure HTML without writing complex JavaScript.
 
 ```html
-<script src="https://jsdelivr.net"></script>
-```
-
-### 2. Compose Declarative HTML UI Nodes
-Write your map boundaries natively inside your layout structures:
-
-```html
-<custom-map lat="41.0082" lng="28.9784" zoom="12" width="100%" height="500px">
-    <map-pin lat="41.0082" lng="28.9784"><b>Headquarters</b><br>Main Facility Outpost Location.</map-pin>
-    <map-pin lat="41.0422" lng="29.0074">Logistics Core Hub</map-pin>
+<custom-map 
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
 </custom-map>
-```
+✨ Features
+⚡ Native Web Component architecture
+🧱 Shadow DOM isolation
+🗺️ Leaflet 1.9.x powered
+📍 Draggable primary marker
+🖱️ Click-to-move location
+📌 Dynamic marker support
+🔄 Reactive attributes
+📡 Custom DOM events
+📐 Automatic resize handling
+🧹 Memory-safe lifecycle
+♻️ Reconnect-safe component
+🎯 Public JavaScript API
 
----
+🚀 Quick Start
+1. Include Leaflet
+<link 
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
-## 📐 Enterprise API Properties & Configuration
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+2. Include Map.js
+<script src="./map.js"></script>
+3. Create your map
+<custom-map
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
+</custom-map>
 
-### `<custom-map>` Elements
+That's it. 🎉
 
-| Property Parameter | Value Blueprint | Default Baseline | Operational Function |
-| :--- | :--- | :--- | :--- |
-| `lat` | Floating Decimal | `41.0082` | Target central geographic latitude point |
-| `lng` | Floating Decimal | `28.9784` | Target central geographic longitude point |
-| `zoom` | Range Scale (1-18) | `13` | Default entry view focus amplification factor |
-| `width` | Explicit CSS Metric | `100%` | Horizontal bounding structural container size |
-| `height` | Explicit CSS Metric | `400px` | Vertical bounding structural container size |
+📌 Adding Markers
+<custom-map
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
 
-### `<map-pin>` Elements
+    <map-pin
+        lat="41.015"
+        lng="28.979">
+        Istanbul Marker
+    </map-pin>
 
-| Property Parameter | Value Blueprint | Operational Function |
-| :--- | :--- | :--- |
-| `lat` | Floating Decimal | **Mandatory Value.** Precision marker anchor latitude point |
-| `lng` | Floating Decimal | **Mandatory Value.** Precision marker anchor longitude point |
-| `innerHTML` | Valid HTML Strings | Inner structural element context to format modern popup wrappers on selection |
+</custom-map>
 
+🎮 JavaScript API
 
-## ⭐ Support & Star
+Get component:
 
-If you find this library useful, please consider giving it a **Star** on GitHub! It helps more developers discover the project and motivates further development.
+const map = document.querySelector(
+    "custom-map"
+);
+Move location
+map.setLocation(
+    40.7128,
+    -74.0060,
+    12
+);
+Fly animation
+map.flyTo(
+    48.8566,
+    2.3522,
+    13
+);
+Get current position
+const location = map.getLocation();
 
+console.log(location);
 
-## 📄 Project Governance & Licensing
-This software codebase is open-source product infrastructure covered under the **MIT License**.
+Output:
 
-## 👨‍💻 Author & Maintainer
+{
+    lat: 41.0082,
+    lng: 28.9784,
+    zoom:12
+}
+📡 Events
 
-This project was envisioned, designed, and crafted with passion. Feel free to reach out for collaborations, feedback, or just to say hi!
+Listen for location changes:
 
-GitHub:[@yagizyagli](https://github.com/yagizyagli)
+map.addEventListener(
+    "locationchange",
+    event => {
 
+        console.log(
+            event.detail
+        );
+
+    }
+);
+
+Available events:
+
+Event	Description
+ready	Map initialized
+locationchange	Marker position changed
+markeradd	Marker created
+markerremove	Marker removed
+tileerror	Tile loading error
+🏗️ Architecture
+Map.js
+│
+├── CustomMap Web Component
+│
+├── Shadow DOM
+│
+├── Leaflet Engine
+│
+├── Marker Layer Manager
+│
+└── Lifecycle Controller
+
+🎯 Why Map.js?
+
+Leaflet is powerful, but applications often need a reusable map component.
+
+map.js provides:
+
+✅ Simple HTML usage
+✅ Framework independent architecture
+✅ React / Vue / Angular compatible
+✅ No build step required
+
+📦 Browser Support
+
+Works with modern browsers supporting:
+
+Custom Elements
+Shadow DOM
+ES Modules
+📄 License
+
+MIT License
+
+Made with ❤️ by yagizyagli
