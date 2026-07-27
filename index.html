@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- EMBEDDED LEAFLET CORE STYLES (BYPASSING ALL NETWORK AND MIME BLOCKS) -->
+    <!-- EMBEDDED LEAFLET CORE STYLES (COMPLETELY NETWORK IMMUNE) -->
     <style>
         .leaflet-pane, .leaflet-tile, .leaflet-marker-icon, .leaflet-marker-shadow, .leaflet-tile-container, .leaflet-map-pane svg, .leaflet-map-pane canvas, .leaflet-zoom-box, .leaflet-image-layer, .leaflet-layer { position: absolute; left: 0; top: 0; }
-        .leaflet-container { overflow: hidden; -webkit-tap-highlight-color: transparent; background: #ddd; font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif; }
+        .leaflet-container { overflow: hidden; -webkit-tap-highlight-color: transparent; background: #1e293b; font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif; }
         .leaflet-tile, .leaflet-marker-icon, .leaflet-marker-shadow { -webkit-user-select: none; -moz-user-select: none; user-select: none; -webkit-user-drag: none; }
         .leaflet-tile { filter: inherit; visibility: hidden; }
         .leaflet-tile-loaded { visibility: inherit; }
@@ -62,18 +62,18 @@
         .demo-wrapper { background: var(--surface); padding: 24px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.2); margin-bottom: 40px; }
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
-        /* Absolute layout dimensions forcing engine visibility maps */
+        /* 🛠️ FORCE ABSOLUTE PIXEL METRICS AT RENDER LEVEL */
         #final-universe-map-anchor {
             display: block !important;
+            visibility: visible !important;
             width: 100% !important;
             height: 550px !important;
             position: relative !important;
-            background-color: #1e293b !important;
             border-radius: 16px !important;
             overflow: hidden !important;
             border: 1px solid rgba(56, 189, 248, 0.2) !important;
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6) !important;
-            z-index: 1 !important;
+            z-index: 100 !important;
         }
     </style>
 </head>
@@ -140,10 +140,17 @@
                     userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
                 });
 
-                setTimeout(() => {
-                    mapEngine.invalidateSize();
-                    window.dispatchEvent(new Event('resize'));
-                }, 350);
+                // 🚀 THE ULTIMATE SENIOR FORCE-REDRAW TRICK
+                // Fires continuous layout calculations to smash 0px engine bottlenecks completely
+                let ticks = 0;
+                const forceResizeInterval = setInterval(() => {
+                    if (mapEngine) {
+                        mapEngine.invalidateSize();
+                        window.dispatchEvent(new Event('resize'));
+                    }
+                    ticks++;
+                    if (ticks > 5) clearInterval(forceResizeInterval);
+                }, 200);
             }
         });
     </script>
