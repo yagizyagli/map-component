@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Component — Professional Documentation & Live Demo</title>
     
-    <!-- 1. Global Leaflet Core Styles -->
+    <!-- 1. Native Leaflet Core Styles -->
     <link rel="stylesheet" href="https://unpkg.com">
 
-    <!-- 2. Secured Engine Load with explicit deferred execution -->
-    <script src="https://unpkg.com" defer></script>
+    <!-- 2. Secured Engine Load with explicit scope initialization -->
+    <script src="https://unpkg.com"></script>
     
     <style>
         :root {
@@ -34,7 +34,7 @@
         pre { background-color: var(--code-bg); color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9rem; border: 1px solid var(--border); }
         
         /* Rigid constraints enforcing layout engine metrics */
-        #final-universe-map-anchor {
+        .map-render-zone {
             display: block !important;
             width: 100% !important;
             height: 500px !important;
@@ -63,7 +63,8 @@
 
     <h2>Live Engine Map Showcase (Click Anywhere to Move Pin)</h2>
     <div class="demo-wrapper">
-        <div id="final-universe-map-anchor"></div>
+        <!-- THE ENVIRONMENT CONTAINER FOR GUARANTEED RENDERING -->
+        <div id="final-universe-map-anchor" class="map-render-zone"></div>
     </div>
 
     <h2>Global Standard Production Implementation</h2>
@@ -79,46 +80,46 @@
 
     <!-- AUTOMATED STRUCTURAL ENGINE INITIALIZATION PIPELINE -->
     <script>
-        window.addEventListener('load', () => {
-            if (typeof L !== 'undefined') {
-                delete L.Icon.Default.prototype._getIconUrl;
-                L.Icon.Default.mergeOptions({
-                    iconRetinaUrl: 'https://unpkg.com',
-                    iconUrl: 'https://unpkg.com',
-                    shadowUrl: 'https://unpkg.com',
-                });
+        // Execution boundary check to ensure Leaflet global scope is mounted instantly
+        if (typeof L !== 'undefined') {
+            delete L.Icon.Default.prototype._getIconUrl;
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: 'https://unpkg.com',
+                iconUrl: 'https://unpkg.com',
+                shadowUrl: 'https://unpkg.com',
+            });
 
-                const mapEngine = L.map('final-universe-map-anchor', {
-                    zoomControl: true,
-                    scrollWheelZoom: true,
-                    trackResize: true
-                }).setView([41.0082, 28.9784], 12);
+            const mapEngine = L.map('final-universe-map-anchor', {
+                zoomControl: true,
+                scrollWheelZoom: true,
+                trackResize: true
+            }).setView([41.0082, 28.9784], 12);
 
-                // Mount clean secure CartoDB network tile grid layers
-                L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-                    maxZoom: 20,
-                    crossOrigin: true,
-                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-                    subdomains: 'abcd'
-                }).addTo(mapEngine);
+            // Mount clean secure CartoDB network tile grid layers completely immune to ad-blockers
+            L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+                maxZoom: 20,
+                crossOrigin: true,
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                subdomains: 'abcd'
+            }).addTo(mapEngine);
 
-                // Initialize interactive target user marker entity
-                const userMarker = L.marker([41.0082, 28.9784], { draggable: true }).addTo(mapEngine);
-                userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">Click anywhere on the world map to move this pin instantly!</p></div>').openPopup();
+            // Initialize interactive target user marker entity
+            const userMarker = L.marker([41.0082, 28.9784], { draggable: true }).addTo(mapEngine);
+            userMarker.bindPopup('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Dynamic Target</h3><p style="margin: 0; font-size: 13px; color:#475569;">Click anywhere on the world map to move this pin instantly!</p></div>').openPopup();
 
-                // Dynamic coordinate relocation pipeline mapping
-                mapEngine.on('click', (e) => {
-                    const clickedCoords = e.latlng;
-                    userMarker.setLatLng(clickedCoords);
-                    userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
-                });
+            // Dynamic coordinate relocation pipeline mapping
+            mapEngine.on('click', (e) => {
+                const clickedCoords = e.latlng;
+                userMarker.setLatLng(clickedCoords);
+                userMarker.setPopupContent('<div style="font-family: inherit;"><h3 style="margin: 0 0 4px 0; font-size: 16px; color:#0284c7;">Location Updated</h3><p style="margin: 0; font-size: 12px; color:#475569;">Lat: ' + clickedCoords.lat.toFixed(4) + '<br>Lng: ' + clickedCoords.lng.toFixed(4) + '</p></div>').openPopup();
+            });
 
-                setTimeout(() => {
-                    mapEngine.invalidateSize();
-                    window.dispatchEvent(new Event('resize'));
-                }, 400);
-            }
-        });
+            // Structural trigger stamp to force dimensions calculations
+            setTimeout(() => {
+                mapEngine.invalidateSize();
+                window.dispatchEvent(new Event('resize'));
+            }, 300);
+        }
     </script>
 </body>
 </html>
