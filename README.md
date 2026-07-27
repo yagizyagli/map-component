@@ -1,6 +1,6 @@
 # 🗺️ Map.js
 
-### Production-ready Leaflet Web Component
+### Production-ready Leaflet Web Component [https://yagizyagli.github.io/map-component/]
 
 A lightweight and reusable `<custom-map>` Web Component built on top of Leaflet 1.9.x.
 
