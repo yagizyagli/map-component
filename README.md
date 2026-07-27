@@ -1,151 +1,117 @@
-# 🗺️ Map.js
+🗺️ Map Component
 
-### Production-ready Leaflet Web Component:[https://yagizyagli.github.io/map-component/]
+A lightweight, production-ready Web Component built with Leaflet that lets you add interactive maps to any HTML page using a single custom element.
 
-A lightweight and reusable `<custom-map>` Web Component built on top of Leaflet 1.9.x.
+No frameworks. No dependencies (except Leaflet). Just plain HTML, CSS, and JavaScript.
 
-Create interactive maps using pure HTML without writing complex JavaScript.
-
-```html
-<custom-map 
-    lat="41.0082"
-    lng="28.9784"
-    zoom="12">
-</custom-map>
 ✨ Features
-⚡ Native Web Component architecture
-🧱 Shadow DOM isolation
-🗺️ Leaflet 1.9.x powered
+🌍 Custom HTML element (<custom-map>)
+🗺️ Powered by Leaflet 1.9.x
 📍 Draggable primary marker
-🖱️ Click-to-move location
-📌 Dynamic marker support
-🔄 Reactive attributes
-📡 Custom DOM events
-📐 Automatic resize handling
-🧹 Memory-safe lifecycle
-♻️ Reconnect-safe component
-🎯 Public JavaScript API
-
-🚀 Quick Start
-1. Include Leaflet
-<link 
-rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+🖱️ Click anywhere to move the marker
+📌 Multiple custom markers using <map-pin>
+⚡ Reactive attributes (lat, lng, zoom)
+🔄 Automatically updates when attributes change
+📦 Shadow DOM encapsulation
+🧩 Framework independent
+🚀 Lightweight and easy to integrate
+🛡️ Memory-safe lifecycle
+📱 Responsive with automatic resize handling
+📦 Installation
+1. Load Leaflet
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-2. Include Map.js
-<script src="./map.js"></script>
-3. Create your map
+2. Load Map Component
+<script src="https://cdn.jsdelivr.net/gh/yagizyagli/map-component/map.js"></script>
+🚀 Quick Start
 <custom-map
     lat="41.0082"
     lng="28.9784"
-    zoom="12">
-</custom-map>
-
-That's it. 🎉
-
-📌 Adding Markers
-<custom-map
-    lat="41.0082"
-    lng="28.9784"
-    zoom="12">
+    zoom="12"
+    style="height:500px;">
 
     <map-pin
         lat="41.015"
-        lng="28.979">
-        Istanbul Marker
+        lng="28.990">
+        Hello Istanbul 👋
     </map-pin>
 
 </custom-map>
+📍 Multiple Markers
+<custom-map lat="41.0082" lng="28.9784" zoom="12">
 
-🎮 JavaScript API
+    <map-pin lat="41.015" lng="28.990">
+        Marker A
+    </map-pin>
 
-Get component:
+    <map-pin lat="41.001" lng="28.970">
+        Marker B
+    </map-pin>
 
-const map = document.querySelector(
-    "custom-map"
-);
-Move location
-map.setLocation(
-    40.7128,
-    -74.0060,
-    12
-);
-Fly animation
-map.flyTo(
-    48.8566,
-    2.3522,
-    13
-);
-Get current position
-const location = map.getLocation();
+    <map-pin lat="41.020" lng="28.965">
+        Marker C
+    </map-pin>
 
-console.log(location);
+</custom-map>
+⚙️ Attributes
+Attribute	Description	Default
+lat	Latitude	41.0082
+lng	Longitude	28.9784
+zoom	Initial zoom level	12
+📚 JavaScript API
+const map = document.querySelector("custom-map");
 
-Output:
+map.setLocation(lat, lng, zoom);
 
-{
-    lat: 41.0082,
-    lng: 28.9784,
-    zoom:12
-}
+map.getLocation();
+
+map.flyTo(lat, lng, zoom);
+
+map.fitPins();
+
+const id = map.addPin(lat, lng, "Popup");
+
+map.removePin(id);
 📡 Events
+Ready
+map.addEventListener("ready", e => {
+    console.log(e.detail.map);
+});
+Location Changed
+map.addEventListener("locationchange", e => {
+    console.log(e.detail.lat, e.detail.lng);
+});
+Marker Added
+map.addEventListener("markeradd", e => {
+    console.log(e.detail);
+});
+Marker Removed
+map.addEventListener("markerremove", e => {
+    console.log(e.detail);
+});
+Tile Error
+map.addEventListener("tileerror", () => {
+    console.log("Tile loading failed.");
+});
+📁 Browser Support
+✅ Chrome
+✅ Edge
+✅ Firefox
+✅ Safari
 
-Listen for location changes:
+Supports all modern browsers with Web Components and ES6 Modules.
 
-map.addEventListener(
-    "locationchange",
-    event => {
-
-        console.log(
-            event.detail
-        );
-
-    }
-);
-
-Available events:
-
-Event	Description
-ready	Map initialized
-locationchange	Marker position changed
-markeradd	Marker created
-markerremove	Marker removed
-tileerror	Tile loading error
-🏗️ Architecture
-Map.js
-│
-├── CustomMap Web Component
-│
-├── Shadow DOM
-│
-├── Leaflet Engine
-│
-├── Marker Layer Manager
-│
-└── Lifecycle Controller
-
-🎯 Why Map.js?
-
-Leaflet is powerful, but applications often need a reusable map component.
-
-map.js provides:
-
-✅ Simple HTML usage
-✅ Framework independent architecture
-✅ React / Vue / Angular compatible
-✅ No build step required
-
-📦 Browser Support
-
-Works with modern browsers supporting:
-
-Custom Elements
-Shadow DOM
-ES Modules
 📄 License
 
 MIT License
 
-Made with ❤️ by yagizyagli
+👨‍💻 Author
+
+Yağız Yağlı
+
+GitHub: https://github.com/yagizyagli
+Live Demo: https://yagizyagli.github.io/map-component/
+
+⭐ If you like this project, consider giving it a star on GitHub!
