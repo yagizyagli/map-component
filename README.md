@@ -24,7 +24,7 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 2. Load Map Component
-<script src="https://cdn.jsdelivr.net/gh/yagizyagli/map-component/map.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yagizyagli/map-component/map/map.js"></script>
 🚀 Quick Start
 <custom-map
     lat="41.0082"
