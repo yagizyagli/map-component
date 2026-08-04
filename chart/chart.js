@@ -1,7 +1,7 @@
 /**
  * Professional Chart Component
  *
- * Production Grade Chart.js Web Component
+ * Production Grade chart.js Web Component
  *
  * Features
  *
@@ -24,7 +24,7 @@
  * Author: yagizyagli
  */
 
-class Chart extends HTMLElement {
+class chart extends HTMLElement {
 
     static observedAttributes = [
         "type",
