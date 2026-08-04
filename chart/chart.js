@@ -12,6 +12,7 @@
  * ✔ Tooltip Manager
  * ✔ Legend Manager
  * ✔ Export Manager
+ * ✔ Animation Manager
  * ✔ Reactive Attributes
  * ✔ Resize Scheduler
  * ✔ Event Dispatcher
@@ -61,8 +62,10 @@ class CustomChart extends HTMLElement {
 
         this.intersectionObserver = null;
 
+        this.mutationObserver = null;
+
         /*
-         * Internal State
+         * Scheduler
          */
 
         this.pendingFrame = null;
@@ -72,6 +75,18 @@ class CustomChart extends HTMLElement {
         this.internalUpdate = false;
 
         this.destroyed = false;
+
+        /*
+         * Internal Event Bus
+         */
+
+        this.events = new EventTarget();
+
+        /*
+         * Defaults
+         */
+
+        this.defaults = structuredClone(DEFAULTS);
 
         /*
          * Component State
@@ -95,6 +110,8 @@ class CustomChart extends HTMLElement {
          * Managers
          */
 
+        this.pluginManager = new PluginManager();
+
         this.datasetManager = new DatasetManager();
 
         this.tooltipManager = new TooltipManager();
@@ -105,7 +122,7 @@ class CustomChart extends HTMLElement {
 
         this.exportManager = new ExportManager();
 
-        this.pluginManager = new PluginManager();
+        this.animationManager = new AnimationManager();
 
     }
 
