@@ -1,4 +1,4 @@
-export { default as CustomChart } from "./CustomChart.js";
+export { default as chart } from "./chart.js";
 
 export { default as DEFAULTS } from "./ChartDefaults.js";
 
