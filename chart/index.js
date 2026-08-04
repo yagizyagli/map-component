@@ -2,7 +2,7 @@ export { default as chart } from "./chart.js";
 
 export { default as DEFAULTS } from "./ChartDefaults.js";
 
-export * from "./colors.js";
+export * from "./Colors.js";
 
 export { default as DatasetManager } from "./DatasetManager.js";
 
