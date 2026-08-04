@@ -24,7 +24,7 @@
  * Author: yagizyagli
  */
 
-class chart extends HTMLElement {
+class Chart extends HTMLElement {
 
     static observedAttributes = [
         "type",
