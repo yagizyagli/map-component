@@ -7,30 +7,25 @@
  *
  * ✔ Shadow DOM
  * ✔ Dataset Registry
- * ✔ Internal Plugin System
+ * ✔ Plugin Manager
  * ✔ Theme Engine
+ * ✔ Tooltip Manager
+ * ✔ Legend Manager
+ * ✔ Export Manager
  * ✔ Reactive Attributes
  * ✔ Resize Scheduler
- * ✔ Animation Queue
  * ✔ Event Dispatcher
  * ✔ Lifecycle Safe
  * ✔ Destroy Safe
  * ✔ Memory Safe
- * ✔ Export API
- * ✔ Dataset Diff Engine
- * ✔ Incremental Rendering
- * ✔ Tooltip Manager
- * ✔ Legend Manager
- * ✔ Zoom Support
- * ✔ Pan Support
- * ✔ Full Public API
+ * ✔ Public API
  *
- * Author:yagizyagli
+ * Author: yagizyagli
  */
 
-class CustomChart extends HTMLElement{
+class CustomChart extends HTMLElement {
 
-    static observedAttributes=[
+    static observedAttributes = [
         "type",
         "theme",
         "title",
@@ -40,52 +35,78 @@ class CustomChart extends HTMLElement{
         "tooltip"
     ];
 
-    constructor(){
+    constructor() {
 
         super();
 
         this.attachShadow({
-            mode:"open"
+            mode: "open"
         });
 
-        this.chart=null;
+        /*
+         * Chart.js
+         */
 
-        this.canvas=null;
+        this.chart = null;
 
-        this.ctx=null;
+        this.canvas = null;
 
-        this.resizeObserver=null;
+        this.ctx = null;
 
-        this.intersectionObserver=null;
+        /*
+         * Observers
+         */
 
-        this.plugins=new Map();
+        this.resizeObserver = null;
 
-        this.datasets=new Map();
+        this.intersectionObserver = null;
 
-        this.controllers=new Map();
+        /*
+         * Internal State
+         */
 
-        this.animations=new Map();
+        this.pendingFrame = null;
 
-        this.pendingFrame=null;
+        this.renderQueued = false;
 
-        this.destroyed=false;
+        this.internalUpdate = false;
 
-        this.renderQueued=false;
+        this.destroyed = false;
 
-        this.internalUpdate=false;
+        /*
+         * Component State
+         */
 
-        this.state={
+        this.state = {
 
-            initialized:false,
+            initialized: false,
 
-            visible:true,
+            visible: true,
 
-            loading:false,
+            loading: false,
 
-            resizing:false,
+            resizing: false,
 
-            theme:"dark"
+            theme: "dark"
 
         };
 
+        /*
+         * Managers
+         */
+
+        this.datasetManager = new DatasetManager();
+
+        this.tooltipManager = new TooltipManager();
+
+        this.legendManager = new LegendManager();
+
+        this.themeManager = new ThemeManager();
+
+        this.exportManager = new ExportManager();
+
+        this.pluginManager = new PluginManager();
+
     }
+
+}
