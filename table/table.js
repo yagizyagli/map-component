@@ -101,28 +101,71 @@ class CustomTable extends HTMLElement {
             theme: "light"
 
         };
-
         /*
          * Managers
          */
 
-        this.dataManager = new DataManager();
+    this.dataManager = new DataManager();
 
-        this.columnManager = new ColumnManager();
+    this.columnManager = new ColumnManager();
 
-        this.sortManager = new SortManager();
+    this.sortManager = new SortManager();
 
-        this.filterManager = new FilterManager();
+    this.filterManager = new FilterManager();
 
-        this.paginationManager = new PaginationManager();
+    this.paginationManager = new PaginationManager();
+    
+    this.selectionManager = new SelectionManager();
 
-        this.selectionManager = new SelectionManager();
+    this.exportManager = new ExportManager();
 
-        this.exportManager = new ExportManager();
+    this.themeManager = new ThemeManager();
 
-        this.themeManager = new ThemeManager();
+    this.virtualScrollManager = new VirtualScrollManager();
 
-        this.virtualScrollManager = new VirtualScrollManager();
+       /*
+     * Manager Binding
+     */
+
+    this.dataManager.bind(this);
+
+    this.columnManager.bind(this);
+    
+    this.sortManager.bind(this);
+
+    this.filterManager.bind(this);
+
+    this.paginationManager.bind(this);
+
+    this.selectionManager.bind(this);
+
+    this.exportManager.bind(this);
+
+    this.themeManager.bind(this);
+
+    this.virtualScrollManager.bind(this);
+
+    /*
+     * Rendering
+     */
+
+    this.renderVersion = 0;
+
+    this.rendering = false;
+
+    this.renderCache = [];
+
+    this.visibleRows = [];
+
+    this.renderPipeline = [];
+
+    /*
+     * Virtual Scroll
+     */
+
+    this.scrollTop = 0;
+
+    this.viewportHeight = 0;
 
     }
 
