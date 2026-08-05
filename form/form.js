@@ -45,9 +45,7 @@ class Form extends HTMLElement {
 
         this.form = null;
 
-        this.container = null;
-
-        this.fields = null;
+        this.container = null;        
 
         /*
          * Observers
@@ -143,6 +141,23 @@ class Form extends HTMLElement {
 
         this.renderCache = [];
 
+        this.renderPipeline = [];
+
+        /*
+         * Form Cache
+         */
+
+        this.initialValues = {};
+
+        this.currentValues = {};
+
+        this.validationCache = new Map();
+
+        /*
+         * Async
+         */
+
+        this.abortController = null;
     }
 
 }
