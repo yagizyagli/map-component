@@ -131,6 +131,9 @@ class Calendar extends HTMLElement {
         this.selectionManager.bind(this);
 
         this.navigationManager.bind(this);
+        this.navigationManager.bindDateManager(
+             this.dateManager
+        );
 
         this.themeManager.bind(this);
 
@@ -145,6 +148,21 @@ class Calendar extends HTMLElement {
         this.renderCache = [];
 
         this.renderPipeline = [];
+        
+        /*
+         * Calendar Cache
+         */
+
+        this.visibleDates = [];
+
+        this.visibleEvents = [];
+
+        this.selectedDates = [];
+
+         /*
+         * Async
+         */
+        this.abortController = null;
 
     }
 
