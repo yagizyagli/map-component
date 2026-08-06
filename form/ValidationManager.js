@@ -98,7 +98,7 @@ export default class ValidationManager {
 
     validate(fields = []) {
 
-        this.clear();
+        this.errors.clear();
 
         let valid = true;
 
@@ -132,8 +132,6 @@ export default class ValidationManager {
             name,
             message
         );
-
-        this.commit();
 
     }
 
