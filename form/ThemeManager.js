@@ -62,9 +62,21 @@ export default class ThemeManager {
 
     }
 
+    unregister(name) {
+
+        return this.themes.delete(name);
+
+    }
+
     has(name) {
 
         return this.themes.has(name);
+
+    }
+
+    is(name) {
+
+        return this.theme === name;
 
     }
 
@@ -89,7 +101,9 @@ export default class ThemeManager {
 
     getVariables() {
 
-        return this.themes.get(this.theme);
+        return this.themes.get(
+            this.theme
+        );
 
     }
 
@@ -98,16 +112,21 @@ export default class ThemeManager {
         if (!this.component)
             return;
 
-        const vars = this.getVariables();
+        const variables =
+            this.getVariables();
 
-        if (!vars)
+        if (!variables)
             return;
 
-        const target = this.component;
+        const target =
+            this.component.shadowRoot ??
+            this.component;
 
-        for (const [key, value] of Object.entries(vars)) {
+        for (const [key, value] of Object.entries(variables)) {
 
-            target.style.setProperty(key, value);
+            target.host
+                ? target.host.style.setProperty(key, value)
+                : target.style.setProperty(key, value);
 
         }
 
