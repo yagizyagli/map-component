@@ -52,14 +52,14 @@ export default class ValidationManager {
 
         const name = field.name;
 
-        this.errors.delete(name);
+        this.clearError(name);
 
         if (
             field.required &&
             !String(field.value ?? "").trim()
         ) {
 
-            this.errors.set(
+            this.setError(
                 name,
                 "This field is required."
             );
@@ -81,7 +81,7 @@ export default class ValidationManager {
 
             if (result !== true) {
 
-                this.errors.set(
+                this.setError(
                     name,
                     result || "Invalid value."
                 );
@@ -98,7 +98,7 @@ export default class ValidationManager {
 
     validate(fields = []) {
 
-        this.errors.clear();
+        this.clear();
 
         let valid = true;
 
@@ -112,7 +112,34 @@ export default class ValidationManager {
 
         }
 
+        this.commit();
+
         return valid;
+
+    }
+
+    validatePattern(value, pattern) {
+
+        return pattern.test(
+            String(value)
+        );
+
+    }
+
+    setError(name, message) {
+
+        this.errors.set(
+            name,
+            message
+        );
+
+        this.commit();
+
+    }
+
+    clearError(name) {
+
+        this.errors.delete(name);
 
     }
 
@@ -139,6 +166,18 @@ export default class ValidationManager {
     clear() {
 
         this.errors.clear();
+
+        this.commit();
+
+    }
+
+    reset() {
+
+        this.validators.clear();
+
+        this.errors.clear();
+
+        this.commit();
 
     }
 
