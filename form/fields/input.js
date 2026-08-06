@@ -1,153 +1,109 @@
 /**
- * Professional Input Component
+ * Professional Input Field
  *
- * Production Grade Input Web Component
- *
- * Features
- *
- * ✔ Shadow DOM
- * ✔ Validation Manager
- * ✔ State Manager
- * ✔ Theme Manager
- * ✔ Reactive Attributes
- * ✔ Lifecycle Safe
- * ✔ Resize Observer
- * ✔ Mutation Observer
- * ✔ Event Dispatcher
- * ✔ Public API
- * ✔ Memory Safe
+ * Production Grade Form Field
  *
  * Author: yagizyagli
  */
 
-class Input extends HTMLElement {
+export default class Input {
 
-    static observedAttributes = [
-        "theme",
-        "type",
-        "placeholder",
-        "disabled",
-        "readonly",
-        "required",
-        "value"
-    ];
+    constructor(form = null) {
 
-    constructor() {
+        this.form = form;
 
-        super();
+        this.element = null;
 
-        this.attachShadow({
-            mode: "open"
-        });
+        this.name = "";
 
-        /*
-         * DOM
-         */
+        this.type = "text";
 
-        this.container = null;
+        this.value = "";
 
-        this.input = null;
+        this.defaultValue = "";
 
-        this.label = null;
+        this.required = false;
 
-        this.helper = null;
+        this.disabled = false;
 
-        /*
-         * Observers
-         */
+        this.readonly = false;
 
-        this.resizeObserver = null;
+        this.valid = true;
 
-        this.intersectionObserver = null;
+    }
 
-        this.mutationObserver = null;
+    bind(form) {
 
-        /*
-         * Scheduler
-         */
+        this.form = form;
 
-        this.pendingFrame = null;
+    }
 
-        this.renderQueued = false;
+    mount(element) {
 
-        this.internalUpdate = false;
+        this.element = element;
 
-        this.destroyed = false;
+    }
 
-        /*
-         * Event Bus
-         */
+    setValue(value) {
 
-        this.events = new EventTarget();
+        this.value = value;
 
-        /*
-         * Defaults
-         */
+        if (this.element) {
 
-        this.defaults = structuredClone(
-            INPUT_DEFAULTS
-        );
+            this.element.value = value;
 
-        /*
-         * State
-         */
+        }
 
-        this.state = {
+    }
 
-            initialized: false,
+    getValue() {
 
-            disabled: false,
+        return this.element
+            ? this.element.value
+            : this.value;
 
-            readonly: false,
+    }
 
-            focused: false,
+    clear() {
 
-            valid: true,
+        this.setValue("");
 
-            theme: "light"
+    }
 
-        };
+    focus() {
 
-        /*
-         * Managers
-         */
+        this.element?.focus();
 
-        this.validationManager = new ValidationManager();
+    }
 
-        this.stateManager = new StateManager();
+    blur() {
 
-        this.themeManager = new ThemeManager();
+        this.element?.blur();
 
-        /*
-         * Manager Binding
-         */
+    }
 
-        this.validationManager.bind(this);
+    validate() {
 
-        this.stateManager.bind(this);
+        if (
+            this.form?.validationManager
+        ) {
 
-        this.themeManager.bind(this);
+            return this.form
+                .validationManager
+                .validateField(this);
 
-        /*
-         * Rendering
-         */
+        }
 
-        this.renderVersion = 0;
+        return true;
 
-        this.rendering = false;
+    }
 
-        this.renderCache = [];
+    destroy() {
 
-        this.renderPipeline = [];
+        this.element = null;
 
-        /*
-         * Async
-         */
-
-        this.abortController = null;
+        this.form = null;
 
     }
 
 }
-
-export default Input;
