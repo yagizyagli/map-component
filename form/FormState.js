@@ -37,6 +37,14 @@ export default class FormState {
 
     }
 
+    getState() {
+
+        return structuredClone(
+            this.state
+        );
+
+    }
+
     update(values = {}) {
 
         Object.assign(
@@ -88,6 +96,22 @@ export default class FormState {
 
     }
 
+    setDisabled(disabled = true) {
+
+        this.state.disabled = Boolean(disabled);
+
+        this.commit();
+
+    }
+
+    setReadonly(readonly = true) {
+
+        this.state.readonly = Boolean(readonly);
+
+        this.commit();
+
+    }
+
     isDirty() {
 
         return this.state.dirty;
@@ -118,6 +142,18 @@ export default class FormState {
 
     }
 
+    isDisabled() {
+
+        return this.state.disabled;
+
+    }
+
+    isReadonly() {
+
+        return this.state.readonly;
+
+    }
+
     reset() {
 
         this.state = {
@@ -130,7 +166,11 @@ export default class FormState {
 
             valid: true,
 
-            loading: false
+            loading: false,
+
+            disabled: false,
+
+            readonly: false
 
         };
 
@@ -139,11 +179,7 @@ export default class FormState {
     commit() {
 
         if (
-            !this.component
-        )
-            return;
-
-        if (
+            this.component &&
             typeof this.component.render === "function"
         ) {
 
