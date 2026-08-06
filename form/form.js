@@ -45,7 +45,13 @@ class Form extends HTMLElement {
 
         this.form = null;
 
-        this.container = null;        
+        this.container = null;
+
+        this.header = null;
+
+        this.body = null;
+
+        this.footer = null;
 
         /*
          * Observers
@@ -101,6 +107,10 @@ class Form extends HTMLElement {
 
             dirty: false,
 
+            touched: false,
+
+            focused: false,
+
             submitted: false,
 
             theme: "light"
@@ -144,6 +154,20 @@ class Form extends HTMLElement {
         this.renderPipeline = [];
 
         /*
+         * Fields
+         */
+
+        this.inputs = [];
+
+        this.selects = [];
+
+        this.checkboxes = [];
+
+        this.radios = [];
+
+        this.switches = [];
+
+        /*
          * Form Cache
          */
 
@@ -153,11 +177,16 @@ class Form extends HTMLElement {
 
         this.validationCache = new Map();
 
+        this.fieldCache = new Map();
+
         /*
          * Async
          */
 
         this.abortController = null;
+
     }
 
 }
+
+export default Form;
