@@ -109,7 +109,10 @@ export default class FieldRegistry {
 
         for (const [name, field] of this.fields) {
 
-            values[name] = field.value;
+            values[name] =
+                typeof field.getValue === "function"
+                    ? field.getValue()
+                    : field.value;
 
         }
 
@@ -127,11 +130,43 @@ export default class FieldRegistry {
             if (!field)
                 continue;
 
-            field.value = value;
+            if (
+                typeof field.setValue === "function"
+            ) {
+
+                field.setValue(value);
+
+            } else {
+
+                field.value = value;
+
+            }
 
         }
 
         this.commit();
+
+    }
+
+    updateRadioGroup(group, currentField) {
+
+        for (const field of this.fields.values()) {
+
+            if (
+                field === currentField
+            )
+                continue;
+
+            if (
+                field.group === group &&
+                typeof field.setChecked === "function"
+            ) {
+
+                field.setChecked(false);
+
+            }
+
+        }
 
     }
 
@@ -144,6 +179,12 @@ export default class FieldRegistry {
             ) {
 
                 field.reset();
+
+            } else if (
+                typeof field.clear === "function"
+            ) {
+
+                field.clear();
 
             } else {
 
@@ -166,13 +207,8 @@ export default class FieldRegistry {
     commit() {
 
         if (
-            !this.component
-        )
-            return;
-
-        if (
-            typeof this.component.render ===
-            "function"
+            this.component &&
+            typeof this.component.render === "function"
         ) {
 
             this.component.render();
