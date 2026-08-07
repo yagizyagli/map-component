@@ -142,3 +142,4 @@ class Button extends HTMLElement {
     }
 
 }
+export default Button;
