@@ -335,3 +335,4 @@ export default class DatasetManager {
     }
 
 }
+export default DatasetManager;
