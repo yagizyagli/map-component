@@ -133,3 +133,4 @@ export default class ThemeManager {
     }
 
 }
+export default ThemeManager;
