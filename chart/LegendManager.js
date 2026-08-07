@@ -293,3 +293,4 @@ export default class LegendManager {
     }
 
 }
+export default LegendManager;
