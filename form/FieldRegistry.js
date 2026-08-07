@@ -226,3 +226,4 @@ export default class FieldRegistry {
     }
 
 }
+export default FieldRegistry;
