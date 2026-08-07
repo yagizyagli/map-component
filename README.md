@@ -210,7 +210,8 @@ MIT License
 GitHub
 
 https://github.com/yagizyagli
-https://yagizyagli.github.io/map-component/
+
+
 
 ---
 
