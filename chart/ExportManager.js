@@ -181,3 +181,4 @@ export default class ExportManager {
     }
 
 }
+export default ExportManager;
