@@ -1,111 +1,532 @@
-<section class="demo-card">
+<!DOCTYPE html>
+<html lang="tr">
 
-<h2>🗺️ Map Component</h2>
+<head>
 
-<p>
-Interactive Leaflet Web Component
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+ Map Component Demo
+</title>
+
+
+<!-- Leaflet -->
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+
+body{
+
+    margin:0;
+
+    padding:40px;
+
+    background:#f8fafc;
+
+    font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+
+    color:#0f172a;
+
+}
+
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+}
+
+
+header{
+
+    margin-bottom:40px;
+
+}
+
+
+h1{
+
+    font-size:42px;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    color:#64748b;
+
+    font-size:18px;
+
+}
+
+
+
+.card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    margin-bottom:30px;
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.08);
+
+}
+
+
+.card h2{
+
+    margin-top:0;
+
+}
+
+
+.custom-info{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:20px;
+
+}
+
+
+button{
+
+    border:0;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-weight:600;
+
+}
+
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+.log{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:#0f172a;
+
+    color:#22c55e;
+
+    border-radius:12px;
+
+    min-height:80px;
+
+    font-family:monospace;
+
+}
+
+
+
+custom-map{
+
+    display:block;
+
+    width:100%;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<header>
+
+<h1>
+🗺️  Map Component
+</h1>
+
+
+<p class="subtitle">
+
+Production Grade Leaflet Web Component
+
 </p>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
 
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+</header>
 
-<script type="module" src="./index.js"></script>
-    
+
+
+
+<section class="card">
+
+
+<h2>
+Interactive Map
+</h2>
+
+
 <custom-map
-    id="mainMap"
-    lat="41.015"
-    lng="28.979"
-    zoom="13">
 
-    <map-pin
-        lat="41.0082"
-        lng="28.9784">
-        İstanbul
-    </map-pin>
+id="demoMap"
 
-    <map-pin
-        lat="41.043"
-        lng="29.005">
-        Beşiktaş
-    </map-pin>
+lat="41.015"
 
-    <map-pin
-        lat="41.025"
-        lng="28.974">
-        Taksim
-    </map-pin>
+lng="28.979"
+
+zoom="13">
+
+
+<map-pin
+
+lat="41.0082"
+
+lng="28.9784">
+
+Ayasofya
+
+</map-pin>
+
+
+
+<map-pin
+
+lat="41.043"
+
+lng="29.005">
+
+Beşiktaş
+
+</map-pin>
+
+
+
+<map-pin
+
+lat="41.025"
+
+lng="28.974">
+
+Taksim
+
+</map-pin>
+
+
 
 </custom-map>
 
 
-<div class="actions">
+
+<div class="custom-info">
+
 
 <button id="istanbul">
+
 Istanbul
+
 </button>
+
+
+<button id="fly">
+
+Fly To
+
+</button>
+
 
 <button id="fit">
+
 Fit Pins
+
 </button>
 
+
+<button id="add">
+
+Add Marker
+
+</button>
+
+
+
 </div>
+
+
+<div class="log" id="log">
+
+Waiting...
+
+</div>
+
+
 
 </section>
 
 
+
+
+<section class="card">
+
+
+<h2>
+Public API
+</h2>
+
+
+<pre>
+
+map.setLocation()
+
+map.getLocation()
+
+map.flyTo()
+
+map.fitPins()
+
+map.addPin()
+
+map.removePin()
+
+</pre>
+
+
+</section>
+
+
+
+
+</div>
+
+
+
+
+
+<!-- Leaflet -->
+
+<script
+
+src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js">
+
+</script>
+
+
+
+<!-- Your Library -->
+
+<script
+
+type="module"
+
+src="./index.js">
+
+</script>
+
+
+
+
 <script>
+
 
 const map =
 document.querySelector(
-    "#mainMap"
+"#demoMap"
 );
 
 
-document.querySelector(
-    "#istanbul"
-)
-.onclick = ()=>{
 
-    map.flyTo(
+const log =
+document.querySelector(
+"#log"
+);
+
+
+
+function write(data){
+
+    log.innerHTML =
+    JSON.stringify(
+        data,
+        null,
+        2
+    );
+
+}
+
+
+
+
+map.addEventListener(
+"ready",
+e=>{
+
+    write(
+    {
+        status:"ready",
+        map:e.detail.map
+    }
+    );
+
+});
+
+
+
+
+map.addEventListener(
+"locationchange",
+e=>{
+
+    write(
+    {
+        event:"locationchange",
+        ...e.detail
+    }
+    );
+
+});
+
+
+
+
+map.addEventListener(
+"markeradd",
+e=>{
+
+    write(
+    {
+        event:"markeradd",
+        ...e.detail
+    }
+    );
+
+});
+
+
+
+
+
+document
+.querySelector("#istanbul")
+.onclick=()=>{
+
+
+    map.setLocation(
         41.015,
         28.979,
         13
     );
 
+
 };
 
 
-document.querySelector(
-    "#fit"
-)
-.onclick = ()=>{
+
+
+
+document
+.querySelector("#fly")
+.onclick=()=>{
+
+
+    map.flyTo(
+        41.0082,
+        28.9784,
+        15
+    );
+
+
+};
+
+
+
+
+
+document
+.querySelector("#fit")
+.onclick=()=>{
+
 
     map.fitPins();
 
+
 };
 
 
-map.addEventListener(
-    "ready",
-    ()=>{
-        console.log(
-            "Map ready"
-        );
+
+
+
+document
+.querySelector("#add")
+.onclick=()=>{
+
+
+    const id =
+    map.addPin(
+        41.030,
+        28.970,
+        "Yeni Marker"
+    );
+
+
+    write(
+    {
+        added:id
     }
-);
+    );
 
 
-map.addEventListener(
-    "locationchange",
-    e=>{
+};
 
-        console.log(
-            e.detail
-        );
-
-    }
-);
 
 
 </script>
+
+
+</body>
+
+</html>
