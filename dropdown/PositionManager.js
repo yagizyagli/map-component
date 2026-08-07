@@ -149,3 +149,4 @@ export default class PositionManager {
     }
 
 }
+export default PositionManager;
