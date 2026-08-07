@@ -167,3 +167,4 @@ class Calendar extends HTMLElement {
     }
 
 }
+        export default Calendar;
