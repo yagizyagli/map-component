@@ -192,3 +192,4 @@ export default class SelectionManager {
     }
 
 }
+export default SelectionManager;
