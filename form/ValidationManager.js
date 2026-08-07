@@ -203,3 +203,4 @@ export default class ValidationManager {
     }
 
 }
+export default ValidationManager;
