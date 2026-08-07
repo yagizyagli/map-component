@@ -223,3 +223,4 @@ export default class SortManager {
     }
 
 }
+export default SortManager;
