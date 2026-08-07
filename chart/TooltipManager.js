@@ -258,3 +258,4 @@ export default class TooltipManager {
     }
 
 }
+export default TooltipManager;
