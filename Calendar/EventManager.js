@@ -194,3 +194,4 @@ export default class EventManager {
     }
 
 }
+export default EventManager;
