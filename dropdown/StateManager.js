@@ -122,3 +122,4 @@ export default class StateManager {
     }
 
 }
+export default StateManager;
