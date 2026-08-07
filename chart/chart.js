@@ -127,3 +127,4 @@ class Chart extends HTMLElement {
     }
 
 }
+    export default Chart;
