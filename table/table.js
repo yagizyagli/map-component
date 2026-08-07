@@ -170,3 +170,4 @@ class CustomTable extends HTMLElement {
     }
 
 }
+    export default Table;
