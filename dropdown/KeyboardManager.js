@@ -128,3 +128,4 @@ export default class KeyboardManager {
     }
 
 }
+export default KeyboardManager;
