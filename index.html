@@ -462,13 +462,14 @@ document
 .querySelector("#istanbul")
 .onclick=()=>{
 
+    if(!map)
+        return;
 
     map.setLocation(
         41.015,
         28.979,
         13
     );
-
 
 };
 
