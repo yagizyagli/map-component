@@ -198,3 +198,4 @@ export default class FormState {
     }
 
 }
+export default FormState;
