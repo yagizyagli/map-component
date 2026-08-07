@@ -11,8 +11,7 @@
       "./tailwind/preset": "./tailwind/preset.js"
   },
   "files": [
-    "**/*.js",
-    "**/*.css",
+    "**/*.js",    
     "README.md",
     "LICENSE"
   ],
