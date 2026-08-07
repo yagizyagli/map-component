@@ -155,3 +155,4 @@ export default class FilterManager {
     }
 
 }
+export default FilterManager;
