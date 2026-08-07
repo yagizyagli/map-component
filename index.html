@@ -372,11 +372,19 @@ src="./index.js">
 
 <script>
 
+let map = null;
 
-const map =
-document.querySelector(
-"#demoMap"
-);
+
+document
+.querySelector("#demoMap")
+.addEventListener(
+"ready",
+e=>{
+
+    map =
+    e.currentTarget;
+
+});
 
 
 
