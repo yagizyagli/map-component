@@ -156,5 +156,6 @@ export const DEFAULTS = {
     }
 
 };
-
-export default DEFAULTS;
+export default Object.freeze(
+    CHART_DEFAULTS
+);
