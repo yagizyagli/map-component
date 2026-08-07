@@ -102,3 +102,4 @@ export default class AnimationManager {
     }
 
 }
+export default AnimationManager;
