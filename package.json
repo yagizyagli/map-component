@@ -6,7 +6,9 @@
   "main": "./index.js",
   "module": "./index.js",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+     "./tailwind": "./tailwind/index.js",
+      "./tailwind/preset": "./tailwind/preset.js"
   },
   "files": [
     "**/*.js",
