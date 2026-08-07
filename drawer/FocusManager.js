@@ -143,3 +143,4 @@ export default class FocusManager {
     }
 
 }
+export default FocusManager;
