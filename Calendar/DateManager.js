@@ -184,3 +184,4 @@ export default class DateManager {
     }
 
 }
+export default DateManager;
