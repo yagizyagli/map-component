@@ -1,0 +1,33 @@
+{
+  "name": "@yagizyagli/ui",
+  "version": "1.0.0",
+  "description": "Production Grade Web Components UI Library",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "**/*.js",
+    "**/*.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "ui",
+    "components",
+    "javascript",
+    "vanilla",
+    "frontend",
+    "library"
+  ],
+  "author": "Yağız Yağlı",
+  "license": "MIT",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  }
+}
