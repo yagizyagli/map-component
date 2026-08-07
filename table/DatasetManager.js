@@ -231,3 +231,4 @@ export default class DataManager {
     }
 
 }
+export default DatasetManager;
