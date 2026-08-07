@@ -117,3 +117,4 @@ export default class ToastManager {
     }
 
 }
+export default ToastManager;
