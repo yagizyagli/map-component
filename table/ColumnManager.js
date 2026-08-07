@@ -267,3 +267,4 @@ export default class ColumnManager {
     }
 
 }
+export default ColumnManager;
