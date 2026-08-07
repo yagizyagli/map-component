@@ -1,268 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+<section class="demo-card">
 
-<head>
+<h2>🗺️ Map Component</h2>
 
-    <meta charset="UTF-8">
+<p>
+Interactive Leaflet Web Component
+</p>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
 
-    <title>UI Library Demo</title>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <script type="module" src="../index.js"></script>
+<script type="module" src="./index.js"></script>
+    
+<custom-map
+    id="mainMap"
+    lat="41.015"
+    lng="28.979"
+    zoom="13">
 
-    <style>
+    <map-pin
+        lat="41.0082"
+        lng="28.9784">
+        İstanbul
+    </map-pin>
 
-        * {
+    <map-pin
+        lat="41.043"
+        lng="29.005">
+        Beşiktaş
+    </map-pin>
 
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <map-pin
+        lat="41.025"
+        lng="28.974">
+        Taksim
+    </map-pin>
 
-        }
+</custom-map>
 
-        body {
 
-            font-family: Inter, Arial, sans-serif;
-            background: #f5f7fb;
-            color: #111827;
+<div class="actions">
 
-        }
+<button id="istanbul">
+Istanbul
+</button>
 
-        header {
+<button id="fit">
+Fit Pins
+</button>
 
-            padding: 60px 30px;
-            background: #111827;
-            color: white;
-            text-align: center;
-
-        }
-
-        header h1 {
-
-            font-size: 42px;
-            margin-bottom: 12px;
-
-        }
-
-        header p {
-
-            opacity: .8;
-
-        }
-
-        main {
-
-            width: min(1400px, 95%);
-            margin: 50px auto;
-
-            display: grid;
-            gap: 30px;
-
-        }
-
-        section {
-
-            background: white;
-
-            border-radius: 14px;
-
-            padding: 30px;
-
-            box-shadow:
-                0 8px 30px rgba(0,0,0,.08);
-
-        }
-
-        h2 {
-
-            margin-bottom: 25px;
-
-        }
-
-        .row {
-
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 20px;
-
-            align-items: center;
-
-        }
-
-    </style>
-
-</head>
-
-<body>
-
-<header>
-
-    <h1>
-
-        Production Grade UI Library
-
-    </h1>
-
-    <p>
-
-        Web Components • Shadow DOM • Vanilla JavaScript
-
-    </p>
-
-</header>
-
-<main>
-
-<section>
-
-    <h2>Buttons</h2>
-
-    <div class="row">
-
-        <ui-button>Primary</ui-button>
-
-        <ui-button variant="secondary">
-            Secondary
-        </ui-button>
-
-        <ui-button variant="danger">
-            Danger
-        </ui-button>
-
-    </div>
+</div>
 
 </section>
 
-<section>
 
-    <h2>Badges</h2>
+<script>
 
-    <div class="row">
+const map =
+document.querySelector(
+    "#mainMap"
+);
 
-        <ui-badge>Default</ui-badge>
 
-        <ui-badge variant="success">
-            Success
-        </ui-badge>
+document.querySelector(
+    "#istanbul"
+)
+.onclick = ()=>{
 
-        <ui-badge variant="warning">
-            Warning
-        </ui-badge>
+    map.flyTo(
+        41.015,
+        28.979,
+        13
+    );
 
-    </div>
+};
 
-</section>
 
-<section>
+document.querySelector(
+    "#fit"
+)
+.onclick = ()=>{
 
-    <h2>Cards</h2>
+    map.fitPins();
 
-    <div class="row">
+};
 
-        <ui-card>
 
-            Card Component
+map.addEventListener(
+    "ready",
+    ()=>{
+        console.log(
+            "Map ready"
+        );
+    }
+);
 
-        </ui-card>
 
-    </div>
+map.addEventListener(
+    "locationchange",
+    e=>{
 
-</section>
+        console.log(
+            e.detail
+        );
 
-<section>
+    }
+);
 
-    <h2>Forms</h2>
 
-    <ui-form></ui-form>
-
-</section>
-
-<section>
-
-    <h2>Calendar</h2>
-
-    <ui-calendar></ui-calendar>
-
-</section>
-
-<section>
-
-    <h2>Table</h2>
-
-    <ui-table></ui-table>
-
-</section>
-
-<section>
-
-    <h2>Chart</h2>
-
-    <ui-chart></ui-chart>
-
-</section>
-
-<section>
-
-    <h2>Map</h2>
-
-    <ui-map></ui-map>
-
-</section>
-
-<section>
-
-    <h2>Toast</h2>
-
-    <div class="row">
-
-        <ui-toast>
-
-            Demo Toast
-
-        </ui-toast>
-
-    </div>
-
-</section>
-
-<section>
-
-    <h2>Modal</h2>
-
-    <div class="row">
-
-        <ui-modal>
-
-            Modal Component
-
-        </ui-modal>
-
-    </div>
-
-</section>
-
-<section>
-
-    <h2>Drawer</h2>
-
-    <div class="row">
-
-        <ui-drawer>
-
-            Drawer Component
-
-        </ui-drawer>
-
-    </div>
-
-</section>
-
-</main>
-
-</body>
-
-</html>
+</script>
