@@ -175,3 +175,4 @@ export default class VirtualScrollManager {
     }
 
 }
+export default VirtualScrollManager;
