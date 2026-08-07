@@ -181,3 +181,4 @@ export default class PaginationManager {
     }
 
 }
+export default PaginationManager;
