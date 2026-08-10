@@ -1,740 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>Custom Map Component Test</title>
 
-    <title>
-        Web Components Library Demo
-    </title>
 
-    <!-- Leaflet -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
-    >
+<!-- Leaflet JS -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+body{
 
-        body {
-            margin: 0;
-            min-height: 100vh;
+    margin:0;
 
-            background:
-                #f8fafc;
+    padding:40px;
 
-            color:
-                #0f172a;
+    background:#0f172a;
 
-            font-family:
-                Inter,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-        }
+    color:white;
 
-        code,
-        pre {
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                "Liberation Mono",
-                monospace;
-        }
+    font-family:
+    Arial,
+    sans-serif;
 
-        custom-map {
-            display: block;
-            width: 100%;
-        }
+}
 
-    </style>
+
+h1{
+
+    margin-bottom:30px;
+
+}
+
+
+.card{
+
+    background:#1e293b;
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+
+custom-map{
+
+    width:100%;
+
+    --map-height:600px;
+
+}
+
+
+button{
+
+    margin-top:20px;
+
+    padding:12px 20px;
+
+    border:0;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    background:#38bdf8;
+
+    color:#082f49;
+
+    font-weight:bold;
+
+}
+
+
+
+</style>
+
 
 </head>
 
 
 <body>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
 
+<h1>
+Custom Map Web Component Test
+</h1>
 
-        <!-- Header -->
 
-        <header class="mb-12">
 
-            <div
-                class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-4"
-            >
-                Vanilla Web Components
-            </div>
+<div class="card">
 
-            <h1
-                class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900"
-            >
-                Component Library
-            </h1>
 
-            <p
-                class="mt-4 text-lg text-slate-500 max-w-3xl"
-            >
-                Production-grade, reusable Web Components
-                built with Vanilla JavaScript.
-            </p>
+<custom-map
+    id="map"
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
 
-        </header>
 
+    <map-pin
+        lat="41.015"
+        lng="28.979">
 
-        <!-- Map -->
+        <b>
+        İstanbul Nokta 1
+        </b>
+        <br>
+        Fatih
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+    </map-pin>
 
-            <div class="mb-6">
 
-                <h2 class="text-2xl font-bold text-slate-900">
-                    Map
-                </h2>
 
-                <p class="mt-1 text-slate-500">
-                    Leaflet-powered custom map component.
-                </p>
+    <map-pin
+        lat="41.043"
+        lng="29.007">
 
-            </div>
+        <b>
+        İstanbul Nokta 2
+        </b>
+        <br>
+        Beşiktaş
 
+    </map-pin>
 
-            <custom-map
-                id="demoMap"
-                lat="41.015"
-                lng="28.979"
-                zoom="13"
-            >
 
-                <map-pin
-                    lat="41.0082"
-                    lng="28.9784"
-                >
-                    Hagia Sophia
-                </map-pin>
 
+    <map-pin
+        lat="40.992"
+        lng="29.025">
 
-                <map-pin
-                    lat="41.043"
-                    lng="29.005"
-                >
-                    Besiktas
-                </map-pin>
+        <b>
+        İstanbul Nokta 3
+        </b>
+        <br>
+        Kadıköy
 
+    </map-pin>
 
-                <map-pin
-                    lat="41.025"
-                    lng="28.974"
-                >
-                    Taksim
-                </map-pin>
 
-            </custom-map>
 
-        </section>
+</custom-map>
 
 
-        <!-- Badge -->
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+<button onclick="moveMap()">
+Kadıköy'e Git
+</button>
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Badge
-            </h2>
 
-            <div class="flex gap-3 flex-wrap">
+<button onclick="showPins()">
+Tüm Markerları Göster
+</button>
 
-                <custom-badge>
-                    Primary
-                </custom-badge>
 
-                <custom-badge variant="success">
-                    Success
-                </custom-badge>
 
-                <custom-badge variant="warning">
-                    Warning
-                </custom-badge>
+</div>
 
-                <custom-badge variant="danger">
-                    Danger
-                </custom-badge>
 
-            </div>
 
-        </section>
+<!-- SENİN COMPONENT DOSYAN -->
 
+<script src="./custom-map.js"></script>
 
-        <!-- Buttons -->
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Button
-            </h2>
+<script>
 
-            <div class="flex gap-3 flex-wrap">
 
-                <custom-button>
-                    Primary Button
-                </custom-button>
+const map =
+document.querySelector("#map");
 
-                <custom-button variant="secondary">
-                    Secondary
-                </custom-button>
 
-                <custom-button variant="danger">
-                    Danger
-                </custom-button>
 
-                <custom-button disabled>
-                    Disabled
-                </custom-button>
+map.addEventListener(
+"ready",
+()=>{
 
-            </div>
 
-        </section>
+    console.log(
+        "Map hazır",
+        map.getLocation()
+    );
 
 
-        <!-- Card -->
+});
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Card
-            </h2>
 
-            <custom-card>
 
-                <div slot="header">
-                    <strong>Card Header</strong>
-                </div>
 
-                <p>
-                    This is a reusable card component.
-                </p>
+map.addEventListener(
+"locationchange",
+e=>{
 
-                <div slot="footer">
-                    Card Footer
-                </div>
 
-            </custom-card>
+    console.log(
+        "Yeni konum:",
+        e.detail
+    );
 
-        </section>
 
+});
 
-        <!-- Chart -->
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Chart
-            </h2>
 
-            <custom-chart
-                type="bar"
-                title="Example Chart"
-            ></custom-chart>
 
-        </section>
+map.addEventListener(
+"tileerror",
+()=>{
 
 
-        <!-- Calendar -->
+    console.warn(
+        "Tile yüklenemedi"
+    );
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Calendar
-            </h2>
+});
 
-            <custom-calendar></custom-calendar>
 
-        </section>
 
 
-        <!-- Drawer -->
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+function moveMap(){
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Drawer
-            </h2>
 
-            <button
-                id="openDrawer"
-                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
-            >
-                Open Drawer
-            </button>
+    map.flyTo(
+        40.990,
+        29.030,
+        14
+    );
 
-            <custom-drawer id="demoDrawer">
 
-                <div slot="header">
-                    <strong>Drawer</strong>
-                </div>
+}
 
-                <p>
-                    Drawer content.
-                </p>
 
-            </custom-drawer>
 
-        </section>
 
 
-        <!-- Dropdown -->
+function showPins(){
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Dropdown
-            </h2>
+    map.fitPins();
 
-            <custom-dropdown>
 
-                <button slot="trigger">
-                    Open Dropdown
-                </button>
+}
 
-                <div>
-                    Dropdown content
-                </div>
 
-            </custom-dropdown>
 
-        </section>
 
 
-        <!-- Form -->
+</script>
 
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Form
-            </h2>
-
-            <custom-form>
-
-                <label>
-                    Name
-
-                    <input
-                        name="name"
-                        type="text"
-                        placeholder="Your name"
-                    >
-
-                </label>
-
-
-                <label>
-                    Email
-
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="you@example.com"
-                    >
-
-                </label>
-
-
-                <label>
-                    Country
-
-                    <select name="country">
-
-                        <option>
-                            Turkey
-                        </option>
-
-                        <option>
-                            Germany
-                        </option>
-
-                        <option>
-                            United States
-                        </option>
-
-                    </select>
-
-                </label>
-
-
-                <label>
-                    <input
-                        type="checkbox"
-                        name="terms"
-                    >
-
-                    Accept terms
-                </label>
-
-
-                <label>
-                    <input
-                        type="radio"
-                        name="type"
-                        value="personal"
-                    >
-
-                    Personal
-                </label>
-
-
-                <label>
-                    <input
-                        type="radio"
-                        name="type"
-                        value="business"
-                    >
-
-                    Business
-                </label>
-
-            </custom-form>
-
-        </section>
-
-
-        <!-- Modal -->
-
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Modal
-            </h2>
-
-            <button
-                id="openModal"
-                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
-            >
-                Open Modal
-            </button>
-
-
-            <custom-modal
-                id="demoModal"
-                size="md"
-                theme="light"
-                closable="true"
-                backdrop="true"
-            >
-
-                <div slot="header">
-                    <strong>Modal Title</strong>
-                </div>
-
-
-                <p>
-                    Modal content goes here.
-                </p>
-
-
-                <div slot="footer">
-
-                    <button
-                        type="button"
-                        id="closeModal"
-                        class="px-4 py-2 rounded-lg bg-slate-800 text-white"
-                    >
-                        Close
-                    </button>
-
-                </div>
-
-            </custom-modal>
-
-        </section>
-
-
-        <!-- Spinner -->
-
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Spinner
-            </h2>
-
-            <div class="flex gap-6 items-center">
-
-                <custom-spinner></custom-spinner>
-
-                <custom-spinner size="sm"></custom-spinner>
-
-                <custom-spinner size="lg"></custom-spinner>
-
-            </div>
-
-        </section>
-
-
-        <!-- Table -->
-
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Table
-            </h2>
-
-            <custom-table></custom-table>
-
-        </section>
-
-
-        <!-- Toast -->
-
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Toast
-            </h2>
-
-            <button
-                id="showToast"
-                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
-            >
-                Show Toast
-            </button>
-
-            <custom-toast
-                id="demoToast"
-            >
-                Hello from Toast
-            </custom-toast>
-
-        </section>
-
-
-        <!-- Tooltip -->
-
-        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">
-                Tooltip
-            </h2>
-
-            <custom-tooltip>
-
-                <button>
-                    Hover me
-                </button>
-
-                <span slot="content">
-                    Tooltip content
-                </span>
-
-            </custom-tooltip>
-
-        </section>
-
-
-        <!-- Event Log -->
-
-        <section class="bg-slate-900 rounded-2xl p-6">
-
-            <h2 class="text-xl font-bold text-white mb-4">
-                Event Log
-            </h2>
-
-            <pre
-                id="eventLog"
-                class="text-green-400 text-sm whitespace-pre-wrap min-h-24"
-            >Waiting for events...</pre>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- Leaflet -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
-    ></script>
-
-
-    <!-- Component Library -->
-
-    <script
-        type="module"
-        src="./index.js"
-    ></script>
-
-
-    <!-- Demo Logic -->
-
-    <script>
-
-        const eventLog =
-            document.querySelector(
-                "#eventLog"
-            );
-
-
-        function logEvent(
-            name,
-            detail = {}
-        ) {
-
-            eventLog.textContent =
-                JSON.stringify(
-                    {
-                        event: name,
-                        detail
-                    },
-                    null,
-                    2
-                );
-
-        }
-
-
-        const map =
-            document.querySelector(
-                "#demoMap"
-            );
-
-
-        if (map) {
-
-            map.addEventListener(
-                "ready",
-                event => {
-
-                    logEvent(
-                        "map-ready",
-                        {
-                            initialized: true
-                        }
-                    );
-
-                }
-            );
-
-
-            map.addEventListener(
-                "locationchange",
-                event => {
-
-                    logEvent(
-                        "locationchange",
-                        event.detail
-                    );
-
-                }
-            );
-
-        }
-
-
-        const modal =
-            document.querySelector(
-                "#demoModal"
-            );
-
-
-        document
-            .querySelector("#openModal")
-            ?.addEventListener(
-                "click",
-                () => {
-
-                    modal?.open();
-
-                }
-            );
-
-
-        document
-            .querySelector("#closeModal")
-            ?.addEventListener(
-                "click",
-                () => {
-
-                    modal?.close();
-
-                }
-            );
-
-
-        modal?.addEventListener(
-            "open",
-            () => {
-
-                logEvent(
-                    "modal-open"
-                );
-
-            }
-        );
-
-
-        modal?.addEventListener(
-            "close",
-            () => {
-
-                logEvent(
-                    "modal-close"
-                );
-
-            }
-        );
-
-
-        const drawer =
-            document.querySelector(
-                "#demoDrawer"
-            );
-
-
-        document
-            .querySelector("#openDrawer")
-            ?.addEventListener(
-                "click",
-                () => {
-
-                    drawer?.open?.();
-
-                }
-            );
-
-
-        const toast =
-            document.querySelector(
-                "#demoToast"
-            );
-
-
-        document
-            .querySelector("#showToast")
-            ?.addEventListener(
-                "click",
-                () => {
-
-                    toast?.open?.();
-
-                }
-            );
-
-    </script>
 
 </body>
 
