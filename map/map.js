@@ -70,7 +70,7 @@ class CustomMap extends HTMLElement {
         this.mapEventsRegistered = false;
 
 
-        this.shadowRoot.innerHTML = 
+        this.shadowRoot.innerHTML = `
 
             <link
                 rel="stylesheet"
@@ -107,7 +107,7 @@ class CustomMap extends HTMLElement {
             </style>
 
             <div id="map"></div>
-        ;
+        `;
 
 
         this.mapContainer =
