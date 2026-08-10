@@ -1,7 +1,6 @@
-
 /**
  * Custom Modal Component
- * Production Grade Vanilla Web Component
+ * Production-Grade Vanilla Web Component
  *
  * Features:
  * - Shadow DOM
@@ -9,16 +8,15 @@
  * - Focus management
  * - Keyboard support
  * - Backdrop handling
- * - Body scroll lock
- * - Lifecycle safe
- * - Reconnect safe
+ * - Body scroll locking
+ * - Lifecycle-safe
+ * - Reconnect-safe
  * - Custom events
  * - Public API
- * - Memory safe
+ * - Memory-safe
  *
  * Author: yagizyagli
  */
-
 
 class Modal extends HTMLElement {
 
@@ -32,15 +30,12 @@ class Modal extends HTMLElement {
         ];
     }
 
-
     constructor() {
-
         super();
 
         this.attachShadow({
             mode: "open"
         });
-
 
         this.overlay = null;
         this.container = null;
@@ -49,16 +44,27 @@ class Modal extends HTMLElement {
         this.footer = null;
         this.closeButton = null;
 
-
         this.previousFocusedElement = null;
-        this.keydownHandler = null;
-        this.bound = false;
+
         this.initialized = false;
-        this.internalUpdate = false;
+        this.bound = false;
 
+        this.bodyOverflow = "";
+        this.openState = false;
 
-        this.shadowRoot.innerHTML = 
+        this.handleCloseClick =
+            this.handleCloseClick.bind(this);
 
+        this.handleBackdropClick =
+            this.handleBackdropClick.bind(this);
+
+        this.handleKeydown =
+            this.handleKeydown.bind(this);
+
+        this.handleFocusIn =
+            this.handleFocusIn.bind(this);
+
+        this.shadowRoot.innerHTML = `
             <style>
 
                 :host {
@@ -73,7 +79,6 @@ class Modal extends HTMLElement {
                     display: contents;
                 }
 
-
                 :host([theme="dark"]) {
                     --modal-bg: #0f172a;
                     --modal-color: #f8fafc;
@@ -81,7 +86,6 @@ class Modal extends HTMLElement {
                     --modal-shadow:
                         0 24px 70px rgba(0, 0, 0, .45);
                 }
-
 
                 .overlay {
                     position: fixed;
@@ -94,8 +98,7 @@ class Modal extends HTMLElement {
 
                     padding: 24px;
 
-                    background:
-                        var(--modal-overlay);
+                    background: var(--modal-overlay);
 
                     opacity: 0;
                     visibility: hidden;
@@ -106,13 +109,11 @@ class Modal extends HTMLElement {
                         visibility .2s ease;
                 }
 
-
                 .overlay.open {
                     opacity: 1;
                     visibility: visible;
                     pointer-events: auto;
                 }
-
 
                 .container {
                     width: min(
@@ -128,11 +129,8 @@ class Modal extends HTMLElement {
 
                     overflow: hidden;
 
-                    background:
-                        var(--modal-bg);
-
-                    color:
-                        var(--modal-color);
+                    background: var(--modal-bg);
+                    color: var(--modal-color);
 
                     border:
                         1px solid var(--modal-border);
@@ -150,32 +148,26 @@ class Modal extends HTMLElement {
                         transform .2s ease;
                 }
 
-
                 .overlay.open .container {
                     transform:
                         translateY(0) scale(1);
                 }
 
-
                 .container.size-sm {
                     --modal-width: 400px;
                 }
-
 
                 .container.size-md {
                     --modal-width: 560px;
                 }
 
-
                 .container.size-lg {
                     --modal-width: 760px;
                 }
 
-
                 .container.size-xl {
                     --modal-width: 1000px;
                 }
-
 
                 .header {
                     display: flex;
@@ -183,22 +175,17 @@ class Modal extends HTMLElement {
                     justify-content: space-between;
 
                     gap: 16px;
-
                     padding: 18px 20px;
 
                     border-bottom:
                         1px solid var(--modal-border);
                 }
 
-
                 .body {
                     flex: 1;
-
                     overflow: auto;
-
                     padding: 20px;
                 }
-
 
                 .footer {
                     display: flex;
@@ -206,13 +193,11 @@ class Modal extends HTMLElement {
                     justify-content: flex-end;
 
                     gap: 10px;
-
                     padding: 16px 20px;
 
                     border-top:
                         1px solid var(--modal-border);
                 }
-
 
                 .close {
                     width: 36px;
@@ -239,12 +224,10 @@ class Modal extends HTMLElement {
                         background .15s ease;
                 }
 
-
                 .close:hover {
                     background:
                         rgba(100, 116, 139, .12);
                 }
-
 
                 .close:focus-visible {
                     outline:
@@ -253,13 +236,11 @@ class Modal extends HTMLElement {
                     outline-offset: 2px;
                 }
 
-
                 @media (max-width: 640px) {
 
                     .overlay {
                         padding: 12px;
                     }
-
 
                     .container {
                         max-height:
@@ -267,9 +248,7 @@ class Modal extends HTMLElement {
 
                         border-radius: 14px;
                     }
-
                 }
-
 
                 @media (prefers-reduced-motion: reduce) {
 
@@ -277,11 +256,9 @@ class Modal extends HTMLElement {
                     .container {
                         transition: none;
                     }
-
                 }
 
             </style>
-
 
             <div
                 class="overlay"
@@ -307,7 +284,7 @@ class Modal extends HTMLElement {
                         <button
                             class="close"
                             type="button"
-                            aria-label="Close"
+                            aria-label="Close modal"
                             part="close"
                         >
                             ×
@@ -315,111 +292,62 @@ class Modal extends HTMLElement {
 
                     </header>
 
-
                     <div
                         class="body"
                         part="body"
                     >
-
                         <slot></slot>
-
                     </div>
-
 
                     <footer
                         class="footer"
                         part="footer"
                     >
-
                         <slot name="footer"></slot>
-
                     </footer>
 
                 </section>
 
             </div>
-        ;
-
+        `;
 
         this.overlay =
-            this.shadowRoot.querySelector(
-                ".overlay"
-            );
-
+            this.shadowRoot.querySelector(".overlay");
 
         this.container =
-            this.shadowRoot.querySelector(
-                ".container"
-            );
-
+            this.shadowRoot.querySelector(".container");
 
         this.header =
-            this.shadowRoot.querySelector(
-                ".header"
-            );
-
+            this.shadowRoot.querySelector(".header");
 
         this.body =
-            this.shadowRoot.querySelector(
-                ".body"
-            );
-
+            this.shadowRoot.querySelector(".body");
 
         this.footer =
-            this.shadowRoot.querySelector(
-                ".footer"
-            );
-
+            this.shadowRoot.querySelector(".footer");
 
         this.closeButton =
-            this.shadowRoot.querySelector(
-                ".close"
-            );
-
-
-        this.handleCloseClick =
-            this.handleCloseClick.bind(this);
-
-
-        this.handleBackdropClick =
-            this.handleBackdropClick.bind(this);
-
-
-        this.handleKeydown =
-            this.handleKeydown.bind(this);
-
-
-        this.handleFocusIn =
-            this.handleFocusIn.bind(this);
+            this.shadowRoot.querySelector(".close");
     }
-
 
     connectedCallback() {
 
         if (this.initialized)
             return;
 
-
         this.initialized = true;
 
-
         this.bindEvents();
-
         this.render();
-
     }
-
 
     disconnectedCallback() {
 
         this.unbindEvents();
-
         this.unlockBodyScroll();
 
         this.initialized = false;
-
     }
-
 
     attributeChangedCallback(
         name,
@@ -430,75 +358,61 @@ class Modal extends HTMLElement {
         if (oldValue === newValue)
             return;
 
-
         if (!this.initialized)
             return;
 
-
         this.render();
     }
-
 
     bindEvents() {
 
         if (this.bound)
             return;
 
-
         this.bound = true;
-
 
         this.closeButton.addEventListener(
             "click",
             this.handleCloseClick
         );
 
-
         this.overlay.addEventListener(
             "click",
             this.handleBackdropClick
         );
-
 
         document.addEventListener(
             "keydown",
             this.handleKeydown
         );
 
-
         document.addEventListener(
             "focusin",
             this.handleFocusIn
         );
     }
-
 
     unbindEvents() {
 
         if (!this.bound)
             return;
 
-
         this.bound = false;
-
 
         this.closeButton.removeEventListener(
             "click",
             this.handleCloseClick
         );
 
-
         this.overlay.removeEventListener(
             "click",
             this.handleBackdropClick
         );
 
-
         document.removeEventListener(
             "keydown",
             this.handleKeydown
         );
-
 
         document.removeEventListener(
             "focusin",
@@ -506,16 +420,10 @@ class Modal extends HTMLElement {
         );
     }
 
-
     render() {
 
-        const open =
-            this.isOpen();
-
-
-        const size =
-            this.getSize();
-
+        const open = this.isOpen();
+        const size = this.getSize();
 
         this.container.classList.remove(
             "size-sm",
@@ -524,120 +432,110 @@ class Modal extends HTMLElement {
             "size-xl"
         );
 
-
         this.container.classList.add(
             `size-${size}`
         );
-
 
         this.overlay.classList.toggle(
             "open",
             open
         );
 
-
         this.overlay.setAttribute(
             "aria-hidden",
             String(!open)
         );
 
-
         this.closeButton.hidden =
             !this.isClosable();
 
+        this.container.setAttribute(
+            "aria-hidden",
+            String(!open)
+        );
 
         if (open) {
-
             this.openInternal();
-
         } else {
-
             this.closeInternal();
-
         }
     }
 
-
     openInternal() {
 
-        if (
-            this.previousFocusedElement === null
-        ) {
+        if (this.openState)
+            return;
 
-            this.previousFocusedElement =
-                document.activeElement;
+        this.openState = true;
 
-        }
+        this.previousFocusedElement =
+            document.activeElement;
 
-
-        document.body.classList.add(
-            "custom-modal-open"
-        );
-
-
-        document.body.style.overflow =
-            "hidden";
-
+        this.lockBodyScroll();
 
         requestAnimationFrame(() => {
 
             if (!this.isOpen())
                 return;
 
-
             this.focusFirstElement();
-
         });
 
-
         this.dispatchEvent(
-            new CustomEvent(
-                "open",
-                {
-                    bubbles: true
-                }
-            )
+            new CustomEvent("open", {
+                bubbles: true,
+                composed: true
+            })
         );
     }
 
-
     closeInternal() {
+
+        if (!this.openState)
+            return;
+
+        this.openState = false;
 
         this.unlockBodyScroll();
 
+        const previous =
+            this.previousFocusedElement;
+
+        this.previousFocusedElement = null;
 
         if (
-            this.previousFocusedElement &&
-            typeof this.previousFocusedElement.focus ===
-                "function"
+            previous &&
+            typeof previous.focus === "function"
         ) {
 
             requestAnimationFrame(() => {
 
                 try {
-
-                    this.previousFocusedElement.focus();
-
+                    previous.focus();
                 } catch {}
-
             });
-
         }
 
-
-        this.previousFocusedElement = null;
-
-
         this.dispatchEvent(
-            new CustomEvent(
-                "close",
-                {
-                    bubbles: true
-                }
-            )
+            new CustomEvent("close", {
+                bubbles: true,
+                composed: true
+            })
         );
     }
 
+    lockBodyScroll() {
+
+        this.bodyOverflow =
+            document.body.style.overflow;
+
+        document.body.style.overflow =
+            "hidden";
+
+        document.body.classList.add(
+            "custom-modal-open"
+        );
+    }
 
     unlockBodyScroll() {
 
@@ -645,18 +543,16 @@ class Modal extends HTMLElement {
             "custom-modal-open"
         );
 
+        document.body.style.overflow =
+            this.bodyOverflow || "";
 
-        document.body.style.removeProperty(
-            "overflow"
-        );
+        this.bodyOverflow = "";
     }
-
 
     handleCloseClick() {
 
         this.close();
     }
-
 
     handleBackdropClick(event) {
 
@@ -665,28 +561,22 @@ class Modal extends HTMLElement {
         )
             return;
 
+        const backdrop =
+            this.getBackdrop();
 
         if (
-            this.getBackdrop() === "static"
+            backdrop === "static" ||
+            backdrop === "false"
         )
             return;
-
-
-        if (
-            this.getBackdrop() === "false"
-        )
-            return;
-
 
         this.close();
     }
-
 
     handleKeydown(event) {
 
         if (!this.isOpen())
             return;
-
 
         if (
             event.key === "Escape" &&
@@ -700,22 +590,15 @@ class Modal extends HTMLElement {
             return;
         }
 
-
-        if (
-            event.key === "Tab"
-        ) {
-
+        if (event.key === "Tab") {
             this.trapFocus(event);
-
         }
     }
-
 
     handleFocusIn(event) {
 
         if (!this.isOpen())
             return;
-
 
         if (
             this.contains(event.target) ||
@@ -723,30 +606,22 @@ class Modal extends HTMLElement {
         )
             return;
 
-
         this.focusFirstElement();
     }
-
 
     trapFocus(event) {
 
         const focusable =
             this.getFocusableElements();
 
-
         if (!focusable.length)
             return;
-
 
         const first =
             focusable[0];
 
-
         const last =
-            focusable[
-                focusable.length - 1
-            ];
-
+            focusable[focusable.length - 1];
 
         if (
             event.shiftKey &&
@@ -760,7 +635,6 @@ class Modal extends HTMLElement {
             return;
         }
 
-
         if (
             !event.shiftKey &&
             document.activeElement === last
@@ -769,65 +643,42 @@ class Modal extends HTMLElement {
             event.preventDefault();
 
             first.focus();
-
         }
     }
-
 
     getFocusableElements() {
 
         const selectors = [
-
             "button:not([disabled])",
             "[href]",
             "input:not([disabled])",
             "select:not([disabled])",
             "textarea:not([disabled])",
             "[tabindex]:not([tabindex='-1'])"
-
         ];
 
-
-        const elements = [];
-
-
-        for (
-            const selector of selectors
-        ) {
-
-            elements.push(
-                ...this.querySelectorAll(
-                    selector
-                )
-            );
-
-        }
-
-
-        const shadowElements =
-            this.shadowRoot.querySelectorAll(
+        const elements = [
+            ...this.querySelectorAll(
                 selectors.join(",")
-            );
+            ),
+            ...this.shadowRoot.querySelectorAll(
+                selectors.join(",")
+            )
+        ];
 
-
-        elements.push(
-            ...shadowElements
-        );
-
-
-        return elements.filter(
+        return [
+            ...new Set(elements)
+        ].filter(
             element =>
                 !element.hidden &&
                 element.offsetParent !== null
         );
     }
 
-
     focusFirstElement() {
 
         const focusable =
             this.getFocusableElements();
-
 
         if (focusable.length) {
 
@@ -836,18 +687,13 @@ class Modal extends HTMLElement {
         } else {
 
             this.container.focus();
-
         }
     }
 
-
     isOpen() {
 
-        return this.hasAttribute(
-            "open"
-        );
+        return this.hasAttribute("open");
     }
-
 
     isClosable() {
 
@@ -857,24 +703,18 @@ class Modal extends HTMLElement {
         );
     }
 
-
     getBackdrop() {
 
         return (
-            this.getAttribute(
-                "backdrop"
-            ) || "true"
+            this.getAttribute("backdrop") ||
+            "true"
         );
     }
-
 
     getSize() {
 
         const size =
-            this.getAttribute(
-                "size"
-            );
-
+            this.getAttribute("size");
 
         return [
             "sm",
@@ -882,77 +722,46 @@ class Modal extends HTMLElement {
             "lg",
             "xl"
         ].includes(size)
-
             ? size
-
             : "md";
     }
-
 
     open() {
 
         if (this.isOpen())
-            return;
-
+            return false;
 
         this.setAttribute(
             "open",
             ""
         );
 
-
-        this.dispatchEvent(
-            new CustomEvent(
-                "open-request",
-                {
-                    bubbles: true
-                }
-            )
-        );
+        return true;
     }
-
 
     close() {
 
         if (!this.isOpen())
-            return;
-
+            return false;
 
         this.removeAttribute(
             "open"
         );
 
-
-        this.dispatchEvent(
-            new CustomEvent(
-                "close-request",
-                {
-                    bubbles: true
-                }
-            )
-        );
+        return true;
     }
-
 
     toggle() {
 
-        if (this.isOpen()) {
-
-            this.close();
-
-        } else {
-
-            this.open();
-
-        }
+        return this.isOpen()
+            ? this.close()
+            : this.open();
     }
-
 
     isOpened() {
 
         return this.isOpen();
     }
-
 
     setSize(size) {
 
@@ -966,16 +775,13 @@ class Modal extends HTMLElement {
         )
             return false;
 
-
         this.setAttribute(
             "size",
             size
         );
 
-
         return true;
     }
-
 
     setTheme(theme) {
 
@@ -985,16 +791,13 @@ class Modal extends HTMLElement {
         )
             return false;
 
-
         this.setAttribute(
             "theme",
             theme
         );
 
-
         return true;
     }
-
 
     setClosable(value) {
 
@@ -1003,164 +806,47 @@ class Modal extends HTMLElement {
             String(Boolean(value))
         );
 
-
         return true;
     }
-
 
     setBackdrop(value) {
 
-        if (value === true) {
-
-            this.setAttribute(
-                "backdrop",
-                "true"
-            );
-
-        } else if (value === false) {
-
-            this.setAttribute(
-                "backdrop",
-                "false"
-            );
-
-        } else if (value === "static") {
-
-            this.setAttribute(
-                "backdrop",
-                "static"
-            );
-
-        } else {
-
+        if (
+            value !== true &&
+            value !== false &&
+            value !== "static"
+        )
             return false;
 
-        }
-
+        this.setAttribute(
+            "backdrop",
+            String(value)
+        );
 
         return true;
     }
-
 
     destroy() {
 
         this.closeInternal();
-
         this.unbindEvents();
 
         this.initialized = false;
     }
 }
 
-
 if (
-    !customElements.get(
-        "custom-modal"
-    )
+    !customElements.get("custom-modal")
 ) {
 
     customElements.define(
         "custom-modal",
         Modal
     );
-
 }
-
 
 export {
     Modal
 };
 
-
 export default Modal;
-
-
-### Kullanım
-
-html
-<script
-    type="module"
-    src="./modal.js"
-></script>
-
-
-<custom-modal
-    id="exampleModal"
-    size="md"
-    theme="light"
-    closable="true"
-    backdrop="true"
->
-
-    <div slot="header">
-        <strong>Modal Başlığı</strong>
-    </div>
-
-
-    <p>
-        Modal içeriği burada.
-    </p>
-
-
-    <div slot="footer">
-
-        <button
-            type="button"
-            onclick="document.querySelector('#exampleModal').close()"
-        >
-            Kapat
-        </button>
-
-    </div>
-
-</custom-modal>
-
-
-<button
-    onclick="document.querySelector('#exampleModal').open()"
->
-    Aç
-</button>
-
-
-### Public API
-
-
-const modal =
-    document.querySelector("custom-modal");
-
-modal.open();
-
-modal.close();
-
-modal.toggle();
-
-modal.isOpened();
-
-modal.setSize("lg");
-
-modal.setTheme("dark");
-
-modal.setClosable(false);
-
-modal.setBackdrop("static");
-
-
-### Events
-
-
-modal.addEventListener(
-    "open",
-    () => {
-        console.log("Modal On");
-    }
-);
-
-
-modal.addEventListener(
-    "close",
-    () => {
-        console.log("Modal Off");
-    }
-);
-
