@@ -169,7 +169,7 @@ Tüm Markerları Göster
 
 <!-- SENİN COMPONENT DOSYAN -->
 
-<script src="./custom-map.js"></script>
+<script src="./map.js"></script>
 
 
 
@@ -187,7 +187,7 @@ map.addEventListener(
 
 
     console.log(
-        "Map hazır",
+        "Map ready",
         map.getLocation()
     );
 
@@ -204,7 +204,7 @@ e=>{
 
 
     console.log(
-        "Yeni konum:",
+        "New Location:",
         e.detail
     );
 
@@ -221,7 +221,7 @@ map.addEventListener(
 
 
     console.warn(
-        "Tile yüklenemedi"
+        "Tile could not be loaded."
     );
 
 
