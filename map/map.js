@@ -1,3 +1,22 @@
+/**
+ * Custom Map Component
+ * Production Grade Leaflet Web Component
+ *
+ * Features:
+ * - Shadow DOM
+ * - Leaflet 1.9.x
+ * - Reactive attributes
+ * - Marker registry
+ * - Memory safe lifecycle
+ * - Reconnect safe
+ * - Custom events
+ * - Public API
+ *
+ * Author: yagizyagli
+ */
+
+
+
 const LEAFLET_CSS =
     "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
 
