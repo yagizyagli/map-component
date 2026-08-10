@@ -1,495 +1,740 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>
- Map Component Demo
-</title>
-
-
-<!-- Leaflet -->
-
-<link
-rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
-/>
-
-
-<style>
-
-*{
-    box-sizing:border-box;
-}
-
-
-body{
-
-    margin:0;
-
-    padding:40px;
-
-    background:#f8fafc;
-
-    font-family:
-    Inter,
-    system-ui,
-    sans-serif;
-
-    color:#0f172a;
-
-}
-
-
-.container{
-
-    max-width:1200px;
-
-    margin:auto;
-
-}
-
-
-header{
-
-    margin-bottom:40px;
-
-}
-
-
-h1{
-
-    font-size:42px;
-
-    margin-bottom:10px;
-
-}
-
-
-.subtitle{
-
-    color:#64748b;
-
-    font-size:18px;
-
-}
-
-
-
-.card{
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:30px;
-
-    margin-bottom:30px;
-
-    box-shadow:
-    0 10px 30px
-    rgba(0,0,0,.08);
-
-}
-
-
-.card h2{
-
-    margin-top:0;
-
-}
-
-
-.custom-info{
-
-    display:flex;
-
-    gap:15px;
-
-    flex-wrap:wrap;
-
-    margin-top:20px;
-
-}
-
-
-button{
-
-    border:0;
-
-    padding:12px 20px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    background:#2563eb;
-
-    color:white;
-
-    font-weight:600;
-
-}
-
-
-button:hover{
-
-    background:#1d4ed8;
-
-}
-
-
-.log{
-
-    margin-top:20px;
-
-    padding:15px;
-
-    background:#0f172a;
-
-    color:#22c55e;
-
-    border-radius:12px;
-
-    min-height:80px;
-
-    font-family:monospace;
-
-}
-
-
-
-custom-map{
-
-    display:block;
-
-    width:100%;
-
-}
-
-
-
-</style>
-
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Web Components Library Demo
+    </title>
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background:
+                #f8fafc;
+
+            color:
+                #0f172a;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        code,
+        pre {
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+        }
+
+        custom-map {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
 
 </head>
 
 
 <body>
 
+    <main class="max-w-7xl mx-auto px-6 py-12">
 
-<div class="container">
 
+        <!-- Header -->
 
-<header>
+        <header class="mb-12">
 
-<h1>
-🗺️  Map Component
-</h1>
+            <div
+                class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-4"
+            >
+                Vanilla Web Components
+            </div>
 
+            <h1
+                class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900"
+            >
+                Component Library
+            </h1>
 
-<p class="subtitle">
+            <p
+                class="mt-4 text-lg text-slate-500 max-w-3xl"
+            >
+                Production-grade, reusable Web Components
+                built with Vanilla JavaScript.
+            </p>
 
-Production Grade Leaflet Web Component
+        </header>
 
-</p>
 
+        <!-- Map -->
 
-</header>
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <div class="mb-6">
 
+                <h2 class="text-2xl font-bold text-slate-900">
+                    Map
+                </h2>
 
+                <p class="mt-1 text-slate-500">
+                    Leaflet-powered custom map component.
+                </p>
 
-<section class="card">
+            </div>
 
 
-<h2>
-Interactive Map
-</h2>
+            <custom-map
+                id="demoMap"
+                lat="41.015"
+                lng="28.979"
+                zoom="13"
+            >
 
+                <map-pin
+                    lat="41.0082"
+                    lng="28.9784"
+                >
+                    Hagia Sophia
+                </map-pin>
 
-<custom-map
 
-id="demoMap"
+                <map-pin
+                    lat="41.043"
+                    lng="29.005"
+                >
+                    Besiktas
+                </map-pin>
 
-lat="41.015"
 
-lng="28.979"
+                <map-pin
+                    lat="41.025"
+                    lng="28.974"
+                >
+                    Taksim
+                </map-pin>
 
-zoom="13">
+            </custom-map>
 
+        </section>
 
-<map-pin
 
-lat="41.0082"
+        <!-- Badge -->
 
-lng="28.9784">
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-Ayasofya
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Badge
+            </h2>
 
-</map-pin>
+            <div class="flex gap-3 flex-wrap">
 
+                <custom-badge>
+                    Primary
+                </custom-badge>
 
+                <custom-badge variant="success">
+                    Success
+                </custom-badge>
 
-<map-pin
+                <custom-badge variant="warning">
+                    Warning
+                </custom-badge>
 
-lat="41.043"
+                <custom-badge variant="danger">
+                    Danger
+                </custom-badge>
 
-lng="29.005">
+            </div>
 
-Beşiktaş
+        </section>
 
-</map-pin>
 
+        <!-- Buttons -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-<map-pin
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Button
+            </h2>
 
-lat="41.025"
+            <div class="flex gap-3 flex-wrap">
 
-lng="28.974">
+                <custom-button>
+                    Primary Button
+                </custom-button>
 
-Taksim
+                <custom-button variant="secondary">
+                    Secondary
+                </custom-button>
 
-</map-pin>
+                <custom-button variant="danger">
+                    Danger
+                </custom-button>
 
+                <custom-button disabled>
+                    Disabled
+                </custom-button>
 
+            </div>
 
-</custom-map>
+        </section>
 
-</section>
 
+        <!-- Card -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Card
+            </h2>
 
-<section class="card">
+            <custom-card>
 
+                <div slot="header">
+                    <strong>Card Header</strong>
+                </div>
 
-<h2>
-Public API
-</h2>
+                <p>
+                    This is a reusable card component.
+                </p>
 
+                <div slot="footer">
+                    Card Footer
+                </div>
 
-<pre>
+            </custom-card>
 
-map.setLocation()
+        </section>
 
-map.getLocation()
 
-map.flyTo()
+        <!-- Chart -->
 
-map.fitPins()
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-map.addPin()
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Chart
+            </h2>
 
-map.removePin()
+            <custom-chart
+                type="bar"
+                title="Example Chart"
+            ></custom-chart>
 
-</pre>
+        </section>
 
 
-</section>
+        <!-- Calendar -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Calendar
+            </h2>
 
+            <custom-calendar></custom-calendar>
 
-</div>
+        </section>
 
 
+        <!-- Drawer -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Drawer
+            </h2>
 
-<!-- Leaflet -->
+            <button
+                id="openDrawer"
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
+            >
+                Open Drawer
+            </button>
 
-<script
+            <custom-drawer id="demoDrawer">
 
-src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js">
+                <div slot="header">
+                    <strong>Drawer</strong>
+                </div>
 
-</script>
+                <p>
+                    Drawer content.
+                </p>
 
+            </custom-drawer>
 
+        </section>
 
-<!-- Your Library -->
 
-<script
+        <!-- Dropdown -->
 
-type="module"
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-src="./index.js">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Dropdown
+            </h2>
 
-</script>
+            <custom-dropdown>
 
+                <button slot="trigger">
+                    Open Dropdown
+                </button>
 
+                <div>
+                    Dropdown content
+                </div>
 
+            </custom-dropdown>
 
-<script>
+        </section>
 
-let map = null;
 
+        <!-- Form -->
 
-document
-.querySelector("#demoMap")
-.addEventListener(
-"ready",
-e=>{
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
-    map =
-    e.currentTarget;
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Form
+            </h2>
 
-});
+            <custom-form>
 
+                <label>
+                    Name
 
+                    <input
+                        name="name"
+                        type="text"
+                        placeholder="Your name"
+                    >
 
-const log =
-document.querySelector(
-"#log"
-);
+                </label>
 
 
+                <label>
+                    Email
 
-function write(data){
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                    >
 
-    log.innerHTML =
-    JSON.stringify(
-        data,
-        null,
-        2
-    );
+                </label>
 
-}
 
+                <label>
+                    Country
 
+                    <select name="country">
 
+                        <option>
+                            Turkey
+                        </option>
 
-map.addEventListener(
-"ready",
-e=>{
+                        <option>
+                            Germany
+                        </option>
 
-    write(
-    {
-        status:"ready",
-        map:e.detail.map
-    }
-    );
+                        <option>
+                            United States
+                        </option>
 
-});
+                    </select>
 
+                </label>
 
 
+                <label>
+                    <input
+                        type="checkbox"
+                        name="terms"
+                    >
 
-map.addEventListener(
-"locationchange",
-e=>{
+                    Accept terms
+                </label>
 
-    write(
-    {
-        event:"locationchange",
-        ...e.detail
-    }
-    );
 
-});
+                <label>
+                    <input
+                        type="radio"
+                        name="type"
+                        value="personal"
+                    >
 
+                    Personal
+                </label>
 
 
+                <label>
+                    <input
+                        type="radio"
+                        name="type"
+                        value="business"
+                    >
 
-map.addEventListener(
-"markeradd",
-e=>{
+                    Business
+                </label>
 
-    write(
-    {
-        event:"markeradd",
-        ...e.detail
-    }
-    );
+            </custom-form>
 
-});
+        </section>
 
 
+        <!-- Modal -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Modal
+            </h2>
 
-document
-.querySelector("#istanbul")
-.onclick=()=>{
+            <button
+                id="openModal"
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
+            >
+                Open Modal
+            </button>
 
-    if(!map)
-        return;
 
-    map.setLocation(
-        41.015,
-        28.979,
-        13
-    );
+            <custom-modal
+                id="demoModal"
+                size="md"
+                theme="light"
+                closable="true"
+                backdrop="true"
+            >
 
-};
+                <div slot="header">
+                    <strong>Modal Title</strong>
+                </div>
 
 
+                <p>
+                    Modal content goes here.
+                </p>
 
 
+                <div slot="footer">
 
-document
-.querySelector("#fly")
-.onclick=()=>{
+                    <button
+                        type="button"
+                        id="closeModal"
+                        class="px-4 py-2 rounded-lg bg-slate-800 text-white"
+                    >
+                        Close
+                    </button>
 
+                </div>
 
-    map.flyTo(
-        41.0082,
-        28.9784,
-        15
-    );
+            </custom-modal>
 
+        </section>
 
-};
 
+        <!-- Spinner -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Spinner
+            </h2>
 
+            <div class="flex gap-6 items-center">
 
-document
-.querySelector("#fit")
-.onclick=()=>{
+                <custom-spinner></custom-spinner>
 
+                <custom-spinner size="sm"></custom-spinner>
 
-    map.fitPins();
+                <custom-spinner size="lg"></custom-spinner>
 
+            </div>
 
-};
+        </section>
 
 
+        <!-- Table -->
 
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Table
+            </h2>
 
-document
-.querySelector("#add")
-.onclick=()=>{
+            <custom-table></custom-table>
 
+        </section>
 
-    const id =
-    map.addPin(
-        41.030,
-        28.970,
-        "Yeni Marker"
-    );
 
+        <!-- Toast -->
 
-    write(
-    {
-        added:id
-    }
-    );
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
 
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Toast
+            </h2>
 
-};
+            <button
+                id="showToast"
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold"
+            >
+                Show Toast
+            </button>
 
+            <custom-toast
+                id="demoToast"
+            >
+                Hello from Toast
+            </custom-toast>
 
+        </section>
 
-</script>
 
+        <!-- Tooltip -->
+
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Tooltip
+            </h2>
+
+            <custom-tooltip>
+
+                <button>
+                    Hover me
+                </button>
+
+                <span slot="content">
+                    Tooltip content
+                </span>
+
+            </custom-tooltip>
+
+        </section>
+
+
+        <!-- Event Log -->
+
+        <section class="bg-slate-900 rounded-2xl p-6">
+
+            <h2 class="text-xl font-bold text-white mb-4">
+                Event Log
+            </h2>
+
+            <pre
+                id="eventLog"
+                class="text-green-400 text-sm whitespace-pre-wrap min-h-24"
+            >Waiting for events...</pre>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- Leaflet -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- Component Library -->
+
+    <script
+        type="module"
+        src="./index.js"
+    ></script>
+
+
+    <!-- Demo Logic -->
+
+    <script>
+
+        const eventLog =
+            document.querySelector(
+                "#eventLog"
+            );
+
+
+        function logEvent(
+            name,
+            detail = {}
+        ) {
+
+            eventLog.textContent =
+                JSON.stringify(
+                    {
+                        event: name,
+                        detail
+                    },
+                    null,
+                    2
+                );
+
+        }
+
+
+        const map =
+            document.querySelector(
+                "#demoMap"
+            );
+
+
+        if (map) {
+
+            map.addEventListener(
+                "ready",
+                event => {
+
+                    logEvent(
+                        "map-ready",
+                        {
+                            initialized: true
+                        }
+                    );
+
+                }
+            );
+
+
+            map.addEventListener(
+                "locationchange",
+                event => {
+
+                    logEvent(
+                        "locationchange",
+                        event.detail
+                    );
+
+                }
+            );
+
+        }
+
+
+        const modal =
+            document.querySelector(
+                "#demoModal"
+            );
+
+
+        document
+            .querySelector("#openModal")
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    modal?.open();
+
+                }
+            );
+
+
+        document
+            .querySelector("#closeModal")
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    modal?.close();
+
+                }
+            );
+
+
+        modal?.addEventListener(
+            "open",
+            () => {
+
+                logEvent(
+                    "modal-open"
+                );
+
+            }
+        );
+
+
+        modal?.addEventListener(
+            "close",
+            () => {
+
+                logEvent(
+                    "modal-close"
+                );
+
+            }
+        );
+
+
+        const drawer =
+            document.querySelector(
+                "#demoDrawer"
+            );
+
+
+        document
+            .querySelector("#openDrawer")
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    drawer?.open?.();
+
+                }
+            );
+
+
+        const toast =
+            document.querySelector(
+                "#demoToast"
+            );
+
+
+        document
+            .querySelector("#showToast")
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    toast?.open?.();
+
+                }
+            );
+
+    </script>
 
 </body>
 
