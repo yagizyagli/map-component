@@ -1,4 +1,4 @@
-```js
+
 /**
  * Custom Modal Component
  * Production Grade Vanilla Web Component
@@ -57,7 +57,7 @@ class Modal extends HTMLElement {
         this.internalUpdate = false;
 
 
-        this.shadowRoot.innerHTML = `
+        this.shadowRoot.innerHTML = 
 
             <style>
 
@@ -338,7 +338,7 @@ class Modal extends HTMLElement {
                 </section>
 
             </div>
-        `;
+        ;
 
 
         this.overlay =
@@ -1073,11 +1073,11 @@ export {
 
 
 export default Modal;
-```
+
 
 ### Kullanım
 
-```html
+html
 <script
     type="module"
     src="./modal.js"
@@ -1121,11 +1121,11 @@ export default Modal;
 >
     Aç
 </button>
-```
+
 
 ### Public API
 
-```js
+
 const modal =
     document.querySelector("custom-modal");
 
@@ -1144,11 +1144,11 @@ modal.setTheme("dark");
 modal.setClosable(false);
 
 modal.setBackdrop("static");
-```
+
 
 ### Events
 
-```js
+
 modal.addEventListener(
     "open",
     () => {
@@ -1163,4 +1163,4 @@ modal.addEventListener(
         console.log("Modal Off");
     }
 );
-```
+
