@@ -1,34 +1,36 @@
 {
-  "name": "@yagizyagli/ui",
+  "name": "map-component",
   "version": "1.0.0",
-  "description": "Production Grade Web Components UI Library",
+  "description": "A lightweight, framework-agnostic Web Component for interactive maps.",
   "type": "module",
-  "main": "./index.js",
-  "module": "./index.js",
+  "main": "map.js",
+  "module": "map.js",
   "exports": {
-    ".": "./index.js",
-     "./tailwind": "./tailwind/index.js",
-      "./tailwind/preset": "./tailwind/preset.js"
+    ".": "./map.js"
   },
   "files": [
-    "**/*.js",    
-    "README.md",
-    "LICENSE"
+    "map"
   ],
   "keywords": [
     "web-components",
     "custom-elements",
-    "ui",
-    "components",
+    "map",
+    "maps",
+    "leaflet",
     "javascript",
-    "vanilla",
-    "frontend",
-    "library"
+    "html"
   ],
-  "author": "Yağız Yağlı",
+  "author": "Yagiz Yagli",
   "license": "MIT",
-  "sideEffects": false,
-  "engines": {
-    "node": ">=18"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yagizyagli/map-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yagizyagli/map-component/issues"
+  },
+  "homepage": "https://github.com/yagizyagli/map-component",
+  "peerDependencies": {
+    "leaflet": "^1.9.4"
   }
 }
