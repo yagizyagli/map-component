@@ -1,86 +1,60 @@
-# 🗺️ Map.js
+# 🗺️ Map Component
 
-> A lightweight, production-ready **Leaflet Web Component** for building interactive maps using pure HTML.
+A lightweight, production-ready **Web Component** built with **Leaflet** that lets you add interactive maps to any HTML page using a single custom element.
 
-Map.js wraps **Leaflet 1.9.x** inside a reusable `<custom-map>` Web Component, allowing you to create interactive maps with minimal setup and without manually initializing Leaflet.
+No frameworks. No dependencies (except Leaflet). Just plain HTML, CSS, and JavaScript.
 
 ---
 
 ## ✨ Features
 
-* 🧩 Native Web Component
-* 🌑 Shadow DOM encapsulation
+* 🌍 Custom HTML element (`<custom-map>`)
 * 🗺️ Powered by Leaflet 1.9.x
 * 📍 Draggable primary marker
-* 🖱️ Click anywhere to update location
-* 📌 Multiple custom markers
-* 🔄 Reactive attributes
-* 📡 Custom DOM events
-* 📐 Automatic resize handling
-* ♻️ Safe lifecycle management
-* 🚀 Public JavaScript API
-* 🌐 Framework independent
+* 🖱️ Click anywhere to move the marker
+* 📌 Multiple custom markers using `<map-pin>`
+* ⚡ Reactive attributes (`lat`, `lng`, `zoom`)
+* 🔄 Automatically updates when attributes change
+* 📦 Shadow DOM encapsulation
+* 🧩 Framework independent
+* 🚀 Lightweight and easy to integrate
+* 🛡️ Memory-safe lifecycle
+* 📱 Responsive with automatic resize handling
 
 ---
 
-# 🚀 Installation
+## 📦 Installation
 
-## 1. Include Leaflet
+### 1. Load Leaflet
 
 ```html
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 ```
 
-## 2. Include Map.js
-
-### Local
+### 2. Load Map Component
 
 ```html
-<script src="./map.js"></script>
-```
-
-### jsDelivr (GitHub)
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/https://github.com/yagizyagli/<map-component>/map.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yagizyagli/map-component/map.js"></script>
 ```
 
 ---
 
-# 📍 Basic Usage
+## 🚀 Quick Start
 
 ```html
 <custom-map
     lat="41.0082"
     lng="28.9784"
-    zoom="12">
-</custom-map>
-```
-
----
-
-# 📌 Multiple Markers
-
-```html
-<custom-map
-    lat="41.0082"
-    lng="28.9784"
-    zoom="12">
+    zoom="12"
+    style="height:500px;">
 
     <map-pin
         lat="41.015"
-        lng="28.980">
-        Istanbul
-    </map-pin>
-
-    <map-pin
-        lat="41.020"
-        lng="28.985">
-        Second Marker
+        lng="28.990">
+        Hello Istanbul 👋
     </map-pin>
 
 </custom-map>
@@ -88,139 +62,125 @@ Map.js wraps **Leaflet 1.9.x** inside a reusable `<custom-map>` Web Component, a
 
 ---
 
-# 💻 JavaScript API
+## 📍 Multiple Markers
 
-```javascript
-const map =
-    document.querySelector(
-        "custom-map"
-    );
+```html
+<custom-map lat="41.0082" lng="28.9784" zoom="12">
+
+    <map-pin lat="41.015" lng="28.990">
+        Marker A
+    </map-pin>
+
+    <map-pin lat="41.001" lng="28.970">
+        Marker B
+    </map-pin>
+
+    <map-pin lat="41.020" lng="28.965">
+        Marker C
+    </map-pin>
+
+</custom-map>
 ```
 
-### Set Location
+---
+
+## ⚙️ Attributes
+
+| Attribute | Description        | Default   |
+| --------- | ------------------ | --------- |
+| `lat`     | Latitude           | `41.0082` |
+| `lng`     | Longitude          | `28.9784` |
+| `zoom`    | Initial zoom level | `12`      |
+
+---
+
+## 📚 JavaScript API
 
 ```javascript
-map.setLocation(
-    40.7128,
-    -74.0060,
-    13
-);
-```
+const map = document.querySelector("custom-map");
 
-### Fly To
+map.setLocation(lat, lng, zoom);
 
-```javascript
-map.flyTo(
-    48.8566,
-    2.3522,
-    14
-);
-```
+map.getLocation();
 
-### Get Current Location
+map.flyTo(lat, lng, zoom);
 
-```javascript
-const location =
-    map.getLocation();
-
-console.log(location);
-```
-
-Output:
-
-```javascript
-{
-    lat: 41.0082,
-    lng: 28.9784,
-    zoom: 12
-}
-```
-
-### Add Marker
-
-```javascript
-map.addPin(
-    41.015,
-    28.980,
-    "Hello World"
-);
-```
-
-### Fit All Markers
-
-```javascript
 map.fitPins();
+
+const id = map.addPin(lat, lng, "Popup");
+
+map.removePin(id);
 ```
 
 ---
 
-# 📡 Events
+## 📡 Events
+
+### Ready
 
 ```javascript
-map.addEventListener(
-    "locationchange",
-    event => {
-
-        console.log(
-            event.detail
-        );
-
-    }
-);
+map.addEventListener("ready", e => {
+    console.log(e.detail.map);
+});
 ```
 
-Available Events
+### Location Changed
 
-| Event          | Description                       |
-| -------------- | --------------------------------- |
-| ready          | Fired when the map is initialized |
-| locationchange | Fired when the location changes   |
-| markeradd      | Fired after a marker is added     |
-| markerremove   | Fired after a marker is removed   |
-| tileerror      | Fired when a tile fails to load   |
+```javascript
+map.addEventListener("locationchange", e => {
+    console.log(e.detail.lat, e.detail.lng);
+});
+```
 
----
+### Marker Added
 
-# 📂 Project Structure
+```javascript
+map.addEventListener("markeradd", e => {
+    console.log(e.detail);
+});
+```
 
-```text
-map.js/
-│
-├── map.js
-├── index.html
-├── README.md
-└── LICENSE
+### Marker Removed
+
+```javascript
+map.addEventListener("markerremove", e => {
+    console.log(e.detail);
+});
+```
+
+### Tile Error
+
+```javascript
+map.addEventListener("tileerror", () => {
+    console.log("Tile loading failed.");
+});
 ```
 
 ---
 
-# 🌍 Browser Support
+## 📁 Browser Support
 
-Works in all modern browsers supporting:
+* ✅ Chrome
+* ✅ Edge
+* ✅ Firefox
+* ✅ Safari
 
-* Custom Elements
-* Shadow DOM
-* ES6+
-* ResizeObserver
-
----
-
-# 🤝 Contributing
-
-Contributions, issues and feature requests are welcome.
-
-If you find a bug or have an idea for improvement, feel free to open an issue or submit a pull request.
+Supports all modern browsers with **Web Components** and **ES6 Modules**.
 
 ---
 
-# 📄 License
+## 📄 License
 
 MIT License
 
 ---
 
-## ❤️ Author
+## 👨‍💻 Author
 
-**yagizyagli**
+**Yağız Yağlı**
 
-Built with **Leaflet** and **Web Components**.
+GitHub: https://github.com/yagizyagli
+
+---
+
+⭐ If you like this project, consider giving it a star on GitHub!
