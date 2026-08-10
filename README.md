@@ -1,199 +1,215 @@
-# Production Grade Web Components UI Library
+# 🗺️ Map.js
 
-A modern, lightweight, framework-independent UI library built with **Web Components**, **Shadow DOM**, and **Vanilla JavaScript**.
+> A lightweight, production-ready **Leaflet Web Component** for building interactive maps using pure HTML.
 
-Designed for production environments with a focus on performance, scalability, maintainability, and developer experience.
+Map.js wraps **Leaflet 1.9.x** inside a reusable `<custom-map>` Web Component, allowing you to create interactive maps with minimal setup and without manually initializing Leaflet.
 
 ---
 
 ## ✨ Features
 
-* 🚀 Framework Independent
-* ⚡ Native Web Components
-* 🧩 Shadow DOM Encapsulation
-* 🎨 Theme Engine
-* 📦 Modular Architecture
-* 🔄 Reactive Attributes
-* 🧠 State Management
-* 🛡️ Memory-Safe Lifecycle
-* 📱 Responsive Components
-* 🌍 ES Modules
-* ♻️ Reusable Managers
-* 🔌 Public API
-* 📡 Custom Events
-* 📈 Production Ready
-
----
-
-# 📦 Components
-
-The library includes production-ready components for modern web applications.
-
-## Layout
-
-* Accordion
-* Card
-* Drawer
-* Modal
-* Sidebar
-* Tabs
-
-## Forms
-
-* Form
-* Input
-* Textarea
-* Select
-* Checkbox
-* Radio
-* Switch
-
-## Navigation
-
-* Breadcrumb
-* Dropdown
-* Pagination
-
-## Feedback
-
-* Alert
-* Badge
-* Progress
-* Spinner
-* Toast
-* Tooltip
-
-## Data Display
-
-* Table
-* Chart
-* Calendar
-* Map
-
-## General
-
-* Avatar
-* Button
+* 🧩 Native Web Component
+* 🌑 Shadow DOM encapsulation
+* 🗺️ Powered by Leaflet 1.9.x
+* 📍 Draggable primary marker
+* 🖱️ Click anywhere to update location
+* 📌 Multiple custom markers
+* 🔄 Reactive attributes
+* 📡 Custom DOM events
+* 📐 Automatic resize handling
+* ♻️ Safe lifecycle management
+* 🚀 Public JavaScript API
+* 🌐 Framework independent
 
 ---
 
 # 🚀 Installation
 
-## npm
-
-```bash
-npm install @yagizyagli/map-component
-```
-
-## jsDelivr
+## 1. Include Leaflet
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@yagizyagli/map-component"></script>
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 ```
 
----
+## 2. Include Map.js
 
-# ⚡ Quick Start
+### Local
 
 ```html
-<ui-button>
-    Click Me
-</ui-button>
+<script src="./map.js"></script>
+```
 
-<ui-form></ui-form>
+### jsDelivr (GitHub)
 
-<ui-chart></ui-chart>
-
-<ui-calendar></ui-calendar>
-
-<ui-map></ui-map>
+```html
+<script src="https://cdn.jsdelivr.net/gh/https://github.com/yagizyagli/<map-component>/map.js"></script>
 ```
 
 ---
 
-# 🧩 Framework Support
+# 📍 Basic Usage
 
-This library works with any modern frontend environment.
-
-* Vanilla JavaScript
-* React
-* Vue
-* Angular
-* Svelte
-* Astro
-* Next.js
-* Nuxt
-* Vite
+```html
+<custom-map
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
+</custom-map>
+```
 
 ---
 
-# 🏗️ Architecture
+# 📌 Multiple Markers
 
-Each component is built using a modular architecture.
+```html
+<custom-map
+    lat="41.0082"
+    lng="28.9784"
+    zoom="12">
 
-* Component
-* Managers
-* Defaults
-* Theme Engine
-* Colors
-* Public API
-* Event System
+    <map-pin
+        lat="41.015"
+        lng="28.980">
+        Istanbul
+    </map-pin>
 
-This keeps every component isolated, maintainable, and easy to extend.
+    <map-pin
+        lat="41.020"
+        lng="28.985">
+        Second Marker
+    </map-pin>
+
+</custom-map>
+```
 
 ---
 
-# ⚙️ Core Features
+# 💻 JavaScript API
 
-* Shadow DOM
-* Reactive Attributes
-* Lifecycle Safe
-* Memory Safe
-* Resize Observer
-* Mutation Observer
-* Event Dispatcher
-* Public Methods
-* Theme Management
-* Production Ready APIs
+```javascript
+const map =
+    document.querySelector(
+        "custom-map"
+    );
+```
+
+### Set Location
+
+```javascript
+map.setLocation(
+    40.7128,
+    -74.0060,
+    13
+);
+```
+
+### Fly To
+
+```javascript
+map.flyTo(
+    48.8566,
+    2.3522,
+    14
+);
+```
+
+### Get Current Location
+
+```javascript
+const location =
+    map.getLocation();
+
+console.log(location);
+```
+
+Output:
+
+```javascript
+{
+    lat: 41.0082,
+    lng: 28.9784,
+    zoom: 12
+}
+```
+
+### Add Marker
+
+```javascript
+map.addPin(
+    41.015,
+    28.980,
+    "Hello World"
+);
+```
+
+### Fit All Markers
+
+```javascript
+map.fitPins();
+```
 
 ---
 
 # 📡 Events
 
-Every component dispatches native Custom Events.
-
-Example:
-
 ```javascript
-component.addEventListener("ready", event => {
+map.addEventListener(
+    "locationchange",
+    event => {
 
-    console.log(event.detail);
+        console.log(
+            event.detail
+        );
 
-});
+    }
+);
+```
+
+Available Events
+
+| Event          | Description                       |
+| -------------- | --------------------------------- |
+| ready          | Fired when the map is initialized |
+| locationchange | Fired when the location changes   |
+| markeradd      | Fired after a marker is added     |
+| markerremove   | Fired after a marker is removed   |
+| tileerror      | Fired when a tile fails to load   |
+
+---
+
+# 📂 Project Structure
+
+```text
+map.js/
+│
+├── map.js
+├── index.html
+├── README.md
+└── LICENSE
 ```
 
 ---
 
-# 🎨 Themes
+# 🌍 Browser Support
 
-Supports built-in themes with the ability to register custom themes.
+Works in all modern browsers supporting:
 
-Example:
-
-```javascript
-component.theme = "dark";
-```
+* Custom Elements
+* Shadow DOM
+* ES6+
+* ResizeObserver
 
 ---
 
-# 📱 Browser Support
+# 🤝 Contributing
 
-* ✅ Chrome
-* ✅ Edge
-* ✅ Firefox
-* ✅ Safari
+Contributions, issues and feature requests are welcome.
 
-Supports all modern browsers with ES Modules and Web Components.
+If you find a bug or have an idea for improvement, feel free to open an issue or submit a pull request.
 
 ---
 
@@ -203,16 +219,8 @@ MIT License
 
 ---
 
-# 👨‍💻 Author
+## ❤️ Author
 
-**Yağız Yağlı**
+**yagizyagli**
 
-GitHub
-
-https://github.com/yagizyagli
-
-
-
----
-
-⭐ If this project helps you, consider giving it a star on GitHub.
+Built with **Leaflet** and **Web Components**.
