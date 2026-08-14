@@ -177,7 +177,7 @@ MIT License
 
 ## 👨‍💻 Author
 
-## 🔗 (Yağız Yağlı:https://github.com/yagizyagli/)
+## 🔗Yağız Yağlı:https://github.com/yagizyagli/
 
 ## 🔗Repo:https://github.com/yagizyagli/map-component
 ## 🔗Live Demo:https://yagizyagli.github.io/map-component/
