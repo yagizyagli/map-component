@@ -268,13 +268,13 @@ class CustomMap extends HTMLElement {
         const tiles =
             L.tileLayer(
 
-              https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
 
 
             {
 
                 attribution:
-                "&copy; OpenStreetMap contributors &copy; OpenStreetMap",
+                "&copy; OpenStreetMap contributors &copy; CARTO",
 
                 subdomains:[
                     "a",
